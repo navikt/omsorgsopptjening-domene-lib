@@ -14,8 +14,8 @@ jobs:
         uses: xom9ikk/version-by-tag@v1
         id: version_by_tag
         with:
-          isUseGithubRunNumber: false
-          offset: 1
+          isUseGithubRunNumber: true
+          offset: 0
 
       - name: Some other action
         run: |
