@@ -2,6 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("org.jetbrains.kotlin.jvm") version "1.8.0"
+    `maven-publish`
 }
 
 group = "no.nav.pensjon.opptjening"
