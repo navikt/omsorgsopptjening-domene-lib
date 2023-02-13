@@ -2,8 +2,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("org.jetbrains.kotlin.jvm") version "1.8.0"
-    `maven-publish`
 }
+apply(from = "buildSrc/omsorgsopptjening-lib.gradle")
 
 group = "no.nav.pensjon.opptjening"
 java.sourceCompatibility = JavaVersion.VERSION_17
