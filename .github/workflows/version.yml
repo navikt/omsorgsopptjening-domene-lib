@@ -1,0 +1,26 @@
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-16.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          path: custom_path_to_repo
+
+      - name: Get version and version code
+        uses: xom9ikk/version-by-tag@v1
+        id: version_by_tag
+        with:
+          isUseGithubRunNumber: true
+          offset: 0
+
+      - name: Some other action
+        run: |
+          echo "Tag: ${{ steps.version_by_tag.outputs.tag }}"
+          echo "Semver: ${{ steps.version_by_tag.outputs.semver }}"
+          echo "Version code: ${{ steps.version_by_tag.outputs.versionCode }}"
