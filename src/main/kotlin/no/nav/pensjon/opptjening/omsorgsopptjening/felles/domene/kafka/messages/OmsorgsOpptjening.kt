@@ -9,6 +9,8 @@ data class OmsorgsOpptjening(
     val invilget: Boolean
 )
 
-data class Person(val gjeldendeFnr: String)
-
-data class OmsorgsOpptjeningKey(val omsorgsAr: Int, val gjeldendeFnr: String, val invilget: Boolean)
+data class OmsorgsOpptjeningKey(
+    val omsorgsAr: Int,
+    val gjeldendeFnr: String,
+    val invilget: Boolean
+)
