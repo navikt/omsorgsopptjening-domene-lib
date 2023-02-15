@@ -3,10 +3,10 @@ package no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.kafka.messages
 import java.time.YearMonth
 
 
-data class OmsorgsArbeidKey(val sentralPerson: String, val omsorgsAr: String)
+data class OmsorgsArbeidKey(val sentralPerson: String, val omsorgsAr: String, val omsorgsType: Omsorgstype)
 
 data class OmsorgsarbeidsSnapshot(
-    val sentralPerson: Person,
+    val omsorgsYter: Person,
     val omsorgsAr: String,
     val omsorgstype: Omsorgstype,
     val kjoreHash: String,
