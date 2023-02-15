@@ -30,7 +30,6 @@ data class OmsorgsArbeidSak(
 
 data class OmsorgsArbeid(
     val omsorgsyter: Person,
-    val hash: String,
     val omsorgsArbeidsUtbetalinger: OmsorgsArbeidsUtbetalinger
 )
 
