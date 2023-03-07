@@ -21,7 +21,7 @@ enum class Omsorgstype {
 }
 
 enum class Kilde {
-    BA,
+    BA, IT
 }
 
 data class OmsorgsArbeidSak(
