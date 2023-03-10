@@ -12,5 +12,11 @@ data class OmsorgsOpptjening(
 data class OmsorgsOpptjeningKey(
     val omsorgsAr: Int,
     val gjeldendeFnr: String,
-    val invilget: Boolean
+    val avgjorelse: OpptjeningAvgjorelse
 )
+
+enum class OpptjeningAvgjorelse{
+    INVILGET,
+    AVSLAG,
+    SAKSBEHANDLING
+}
