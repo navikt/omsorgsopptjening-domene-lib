@@ -6,7 +6,7 @@ data class OmsorgsOpptjening(
     val person: Person,
     val grunnlag: OmsorgsarbeidsSnapshot,
     val omsorgsopptjeningResultater: String,
-    val invilget: Boolean
+    val avgjorelse: OpptjeningAvgjorelse
 )
 
 data class OmsorgsOpptjeningKey(
