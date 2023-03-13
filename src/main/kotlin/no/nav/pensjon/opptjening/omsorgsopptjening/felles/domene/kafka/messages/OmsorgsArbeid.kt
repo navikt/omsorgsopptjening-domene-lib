@@ -30,7 +30,8 @@ data class OmsorgsArbeidSak(
 
 data class OmsorgsArbeid(
     val omsorgsyter: Person,
-    val omsorgsArbeidsUtbetalinger: OmsorgsArbeidsUtbetalinger
+    val omsorgsArbeidsUtbetalinger: OmsorgsArbeidsUtbetalinger,
+    val omsorgsmottaker: List<Person>
 )
 
 data class OmsorgsArbeidsUtbetalinger(
