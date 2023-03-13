@@ -29,12 +29,8 @@ data class OmsorgsArbeidSak(
 )
 
 data class OmsorgsArbeid(
-    val omsorgsyter: Person,
-    val omsorgsArbeidsUtbetalinger: OmsorgsArbeidsUtbetalinger,
-    val omsorgsmottaker: List<Person>
-)
-
-data class OmsorgsArbeidsUtbetalinger(
     val fom: YearMonth,
-    val tom: YearMonth
+    val tom: YearMonth,
+    val omsorgsyter: Person,
+    val omsorgsmottaker: List<Person>
 )
