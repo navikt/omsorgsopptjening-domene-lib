@@ -4,9 +4,10 @@ package no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.kafka.messages
 data class OmsorgsOpptjening(
     val omsorgsAr: Int,
     val person: Person,
+    val omsorgsmottakereInvilget: List<Person>,
     val grunnlag: OmsorgsarbeidsSnapshot,
     val omsorgsopptjeningResultater: String,
-    val avgjorelse: OpptjeningAvgjorelse
+    val avgjorelse: OpptjeningAvgjorelse,
 )
 
 data class OmsorgsOpptjeningKey(
