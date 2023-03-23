@@ -3,18 +3,18 @@ package no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.kafka.messages
 import java.time.YearMonth
 
 
-data class OmsorgsArbeidKey(val omsorgsyter: String, val omsorgsAr: Int, val omsorgsType: Omsorgsarbeidstype)
+data class OmsorgsArbeidKey(val omsorgsyter: String, val omsorgsAr: Int, val omsorgsType: OmsorgsarbeidsType)
 
 data class OmsorgsarbeidsSnapshot(
     val omsorgsyter: Person,
     val omsorgsAr: Int,
-    val omsorgstype: Omsorgsarbeidstype,
+    val omsorgstype: OmsorgsarbeidsType,
     val kjoreHash: String,
     val kilde: OmsorgsarbeidsKilde,
     val omsorgsArbeidSaker: List<OmsorgsArbeidSak>
 )
 
-enum class Omsorgsarbeidstype {
+enum class OmsorgsarbeidsType {
     BARNETRYGD,
     HJELPESTØNAD_SATS_3,
     HJELPESTØNAD_SATS_4
