@@ -12,7 +12,15 @@ data class OmsorgsarbeidsSnapshot(
     val kjoreHash: String,
     val kilde: OmsorgsarbeidsKilde,
     val omsorgsArbeidSaker: List<OmsorgsArbeidSak>
-)
+) {
+    fun hentPersoner(): Set<Person> {
+        return (
+                omsorgsArbeidSaker.flatMap { sak ->
+                    sak.omsorgsarbedUtfort.flatMap { arbeid -> arbeid.omsorgsmottaker } + sak.omsorgsarbedUtfort.map { it.omsorgsyter }
+                } + omsorgsyter
+                ).toSet()
+    }
+}
 
 enum class OmsorgsarbeidsType {
     BARNETRYGD,
