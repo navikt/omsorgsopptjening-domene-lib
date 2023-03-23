@@ -21,7 +21,7 @@ enum class OmsorgsarbeidsType {
 }
 
 enum class OmsorgsarbeidsKilde {
-    BA, IT
+    BARNETRYGD, INFOTRYGD
 }
 
 data class OmsorgsArbeidSak(
