@@ -6,7 +6,7 @@ import java.time.YearMonth
 data class OmsorgsArbeidKey(val omsorgsyter: String, val omsorgsAr: Int, val omsorgsType: OmsorgsarbeidsType)
 
 data class OmsorgsarbeidsSnapshot(
-    val omsorgsytere: List<Person>,
+    val omsorgsyter: Person,
     val omsorgsAr: Int,
     val omsorgstype: OmsorgsarbeidsType,
     val kjoreHash: String,
@@ -16,9 +16,9 @@ data class OmsorgsarbeidsSnapshot(
     fun hentPersoner(): Set<Person> {
         return (
                 omsorgsArbeidSaker.flatMap { sak ->
-                    sak.omsorgsarbedUtfort.flatMap { arbeid -> arbeid.omsorgsmottaker } + sak.omsorgsarbedUtfort.map { it.omsorgsyter }
-                } + omsorgsytere
-                ).toSet()
+                    sak.omsorgsarbedUtfort.flatMap { arbeid -> arbeid.omsorgsmottaker } + sak.omsorgsarbedUtfort.map { it.omsorgsytere }
+                } + omsorgsyter
+                ).toSet() as Set<Person>
     }
 }
 
@@ -40,6 +40,6 @@ data class OmsorgsArbeid(
     val fom: YearMonth,
     val tom: YearMonth,
     val prosent: Int,
-    val omsorgsyter: Person,
+    val omsorgsytere: Set<Person>,
     val omsorgsmottaker: List<Person>
 )
