@@ -6,7 +6,7 @@ import java.time.YearMonth
 data class OmsorgsArbeidKey(val omsorgsyter: String, val omsorgsAr: Int, val omsorgsType: OmsorgsarbeidsType)
 
 data class OmsorgsarbeidsSnapshot(
-    val omsorgsyter: Person,
+    val omsorgsytere: List<Person>,
     val omsorgsAr: Int,
     val omsorgstype: OmsorgsarbeidsType,
     val kjoreHash: String,
@@ -17,7 +17,7 @@ data class OmsorgsarbeidsSnapshot(
         return (
                 omsorgsArbeidSaker.flatMap { sak ->
                     sak.omsorgsarbedUtfort.flatMap { arbeid -> arbeid.omsorgsmottaker } + sak.omsorgsarbedUtfort.map { it.omsorgsyter }
-                } + omsorgsyter
+                } + omsorgsytere
                 ).toSet()
     }
 }
