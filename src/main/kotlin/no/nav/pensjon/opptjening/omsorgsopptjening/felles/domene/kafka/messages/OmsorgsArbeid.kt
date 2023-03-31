@@ -16,9 +16,9 @@ data class OmsorgsarbeidsSnapshot(
     fun hentPersoner(): Set<Person> {
         return (
                 omsorgsArbeidSaker.flatMap { sak ->
-                    sak.omsorgsarbedUtfort.flatMap { arbeid -> arbeid.omsorgsmottaker } + sak.omsorgsarbedUtfort.map { it.omsorgsytere }
+                    sak.omsorgsarbedUtfort.flatMap { arbeid -> arbeid.omsorgsmottaker } + sak.omsorgsarbedUtfort.flatMap { arbeid -> arbeid.omsorgsytere }
                 } + omsorgsyter
-                ).toSet() as Set<Person>
+                ).toSet()
     }
 }
 
@@ -41,5 +41,5 @@ data class OmsorgsArbeid(
     val tom: YearMonth,
     val prosent: Int,
     val omsorgsytere: Set<Person>,
-    val omsorgsmottaker: List<Person>
+    val omsorgsmottaker: Set<Person>
 )
