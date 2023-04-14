@@ -40,6 +40,6 @@ data class OmsorgsArbeid(
     val fom: YearMonth,
     val tom: YearMonth,
     val prosent: Int,
-    val omsorgsytere: Person,
+    val omsorgsytere: List<Person>,
     val omsorgsmottakere: List<Person>
 )
