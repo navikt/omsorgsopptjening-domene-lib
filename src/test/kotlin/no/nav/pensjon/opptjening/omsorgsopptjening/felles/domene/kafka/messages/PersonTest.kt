@@ -28,11 +28,11 @@ class PersonTest {
 
     @Test
     fun `Gitt en person equals null skal equals være false`() {
-        assertEquals(Person("12345678910", "2020"), null)
+        assertNotEquals(Person("12345678910", "2020"), null)
     }
 
     @Test
     fun `Gitt to personer med samme fnr så skal hashcode være lik`() {
-        assertEquals(Person("12345678910", "2020").hashCode(), Person("12345678910", "2022"))
+        assertEquals(Person("12345678910", "2020").hashCode(), Person("12345678910", "2022").hashCode())
     }
 }
