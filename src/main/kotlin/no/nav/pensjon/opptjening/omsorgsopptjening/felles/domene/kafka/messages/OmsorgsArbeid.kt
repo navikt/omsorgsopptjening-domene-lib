@@ -11,11 +11,11 @@ data class OmsorgsarbeidsSnapshot(
     val omsorgstype: OmsorgsarbeidsType,
     val kjoreHash: String,
     val kilde: OmsorgsarbeidsKilde,
-    val omsorgsArbeidSaker: List<OmsorgsArbeidSak>
+    val omsorgsarbeidSaker: List<OmsorgsArbeidSak>
 ) {
     fun hentPersoner(): Set<Person> {
         return (
-                omsorgsArbeidSaker.flatMap { sak ->
+                omsorgsarbeidSaker.flatMap { sak ->
                     sak.omsorgsarbedUtfort.flatMap { arbeid -> arbeid.omsorgsmottaker } + sak.omsorgsarbedUtfort.flatMap { arbeid -> arbeid.omsorgsytere }
                 } + omsorgsyter
                 ).toSet()
