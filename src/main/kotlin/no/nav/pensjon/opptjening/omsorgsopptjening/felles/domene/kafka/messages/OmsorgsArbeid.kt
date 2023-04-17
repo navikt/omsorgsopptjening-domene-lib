@@ -11,12 +11,12 @@ data class OmsorgsarbeidsSnapshot(
     val omsorgstype: OmsorgsarbeidsType,
     val kjoreHash: String,
     val kilde: OmsorgsarbeidsKilde,
-    val omsorgsarbeidSaker: List<OmsorgsArbeidSak>
+    val omsorgsArbeidSaker: List<OmsorgsArbeidSak>
 ) {
     fun hentPersoner(): Set<Person> {
         return (
-                omsorgsarbeidSaker.flatMap { sak ->
-                    sak.omsorgsarbeidPerioder.flatMap { arbeid -> arbeid.omsorgsmottakere } + sak.omsorgsarbeidPerioder.flatMap { arbeid -> arbeid.omsorgsytere }
+                omsorgsArbeidSaker.flatMap { sak ->
+                    sak.omsorgsarbedUtfort.flatMap { arbeid -> arbeid.omsorgsmottaker } + sak.omsorgsarbedUtfort.flatMap { arbeid -> arbeid.omsorgsytere }
                 } + omsorgsyter
                 ).toSet()
     }
@@ -33,7 +33,7 @@ enum class OmsorgsarbeidsKilde {
 }
 
 data class OmsorgsArbeidSak(
-    val omsorgsarbeidPerioder: List<OmsorgsArbeid>
+    val omsorgsarbedUtfort: List<OmsorgsArbeid>
 )
 
 data class OmsorgsArbeid(
@@ -41,5 +41,11 @@ data class OmsorgsArbeid(
     val tom: YearMonth,
     val prosent: Int,
     val omsorgsytere: Set<Person>,
-    val omsorgsmottakere: Set<Person>
+    val omsorgsmottaker: Set<Person>,
+    val landstilknytning: Landstilknytning
 )
+
+enum class Landstilknytning {
+    EØS,
+    NASJONAL
+}
