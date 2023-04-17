@@ -16,7 +16,7 @@ data class OmsorgsarbeidsSnapshot(
     fun hentPersoner(): Set<Person> {
         return (
                 omsorgsarbeidSaker.flatMap { sak ->
-                    sak.omsorgsarbedUtfort.flatMap { arbeid -> arbeid.omsorgsmottaker } + sak.omsorgsarbedUtfort.flatMap { arbeid -> arbeid.omsorgsytere }
+                    sak.omsorgsarbeidPerioder.flatMap { arbeid -> arbeid.omsorgsmottakere } + sak.omsorgsarbeidPerioder.flatMap { arbeid -> arbeid.omsorgsytere }
                 } + omsorgsyter
                 ).toSet()
     }
@@ -33,7 +33,7 @@ enum class OmsorgsarbeidsKilde {
 }
 
 data class OmsorgsArbeidSak(
-    val omsorgsarbedUtfort: List<OmsorgsArbeid>
+    val omsorgsarbeidPerioder: List<OmsorgsArbeid>
 )
 
 data class OmsorgsArbeid(
@@ -41,7 +41,7 @@ data class OmsorgsArbeid(
     val tom: YearMonth,
     val prosent: Int,
     val omsorgsytere: Set<Person>,
-    val omsorgsmottaker: Set<Person>,
+    val omsorgsmottakere: Set<Person>,
     val landstilknytning: Landstilknytning
 )
 
