@@ -5,18 +5,18 @@ data class OmsorgsOpptjening(
     val omsorgsAr: Int,
     val omsorgsyter: Person,
     val omsorgsmottakereInvilget: List<Person>,
-    val grunnlag: OmsorgsarbeidsSnapshot,
+    val grunnlag: OmsorgsarbeidSnapshot,
     val vilkarsResultat: String,
-    val utfall: OpptjeningUtfall,
+    val utfall: Utfall,
 )
 
 data class OmsorgsOpptjeningKey(
     val omsorgsAr: Int,
     val omsorgsyter: String,
-    val utfall: OpptjeningUtfall
+    val utfall: Utfall
 )
 
-enum class OpptjeningUtfall{
+enum class Utfall{
     INVILGET,
     AVSLAG,
     SAKSBEHANDLING,
