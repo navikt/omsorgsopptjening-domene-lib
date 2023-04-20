@@ -5,18 +5,18 @@ import java.time.YearMonth
 
 data class OmsorgsArbeidKey(val omsorgsyter: String, val omsorgsAr: Int, val omsorgsType: Omsorgstype)
 
-data class OmsorgsarbeidSnapshot(
+data class OmsorgsGrunnlag(
     val omsorgsyter: Person,
     val omsorgsAr: Int,
     val omsorgstype: Omsorgstype,
     val kjoreHash: String,
     val kilde: Kilde,
-    val omsorgsarbeidSaker: List<OmsorgsarbeidSak>
+    val omsorgsSaker: List<OmsorgsSak>
 ) {
     fun hentPersoner(): Set<Person> {
         return (
-                omsorgsarbeidSaker.flatMap { sak ->
-                    sak.omsorgsarbeidVedtak.flatMap { arbeid -> arbeid.omsorgsmottakere } + sak.omsorgsarbeidVedtak.flatMap { arbeid -> arbeid.omsorgsytere }
+                omsorgsSaker.flatMap { sak ->
+                    sak.omsorgVedtakPeriode.flatMap { arbeid -> arbeid.omsorgsmottakere } + sak.omsorgVedtakPeriode.flatMap { arbeid -> arbeid.omsorgsytere }
                 } + omsorgsyter
                 ).toSet()
     }
@@ -32,11 +32,11 @@ enum class Kilde {
     BARNETRYGD, INFOTRYGD
 }
 
-data class OmsorgsarbeidSak(
-    val omsorgsarbeidVedtak: List<OmsorgsarbeidVedtak>
+data class OmsorgsSak(
+    val omsorgVedtakPeriode: List<OmsorgVedtakPeriode>
 )
 
-data class OmsorgsarbeidVedtak(
+data class OmsorgVedtakPeriode(
     val fom: YearMonth,
     val tom: YearMonth,
     val prosent: Int,

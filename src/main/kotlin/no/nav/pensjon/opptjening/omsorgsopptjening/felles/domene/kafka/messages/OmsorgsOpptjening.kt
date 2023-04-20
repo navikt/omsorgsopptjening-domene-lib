@@ -5,7 +5,7 @@ data class OmsorgsOpptjening(
     val omsorgsAr: Int,
     val omsorgsyter: Person,
     val omsorgsmottakereInvilget: List<Person>,
-    val grunnlag: OmsorgsarbeidSnapshot,
+    val grunnlag: OmsorgsGrunnlag,
     val vilkarsResultat: String,
     val utfall: Utfall,
 )
@@ -20,5 +20,5 @@ enum class Utfall{
     INVILGET,
     AVSLAG,
     SAKSBEHANDLING,
-    MANGLER_INFORMASJON_OM_ANNEN_OMSORGSYTER
+    MANGLER_ANNEN_OMSORGSYTER
 }
