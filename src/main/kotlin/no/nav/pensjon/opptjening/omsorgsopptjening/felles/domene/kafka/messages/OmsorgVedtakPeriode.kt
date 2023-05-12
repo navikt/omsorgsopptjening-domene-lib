@@ -5,6 +5,8 @@ import java.time.YearMonth
 
 data class OmsorgsArbeidKey(val omsorgsyter: String, val omsorgsAr: Int, val omsorgsType: Omsorgstype)
 
+
+
 data class OmsorgsGrunnlag(
     val omsorgsyter: Person,
     val omsorgsAr: Int,
