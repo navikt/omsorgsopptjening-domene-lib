@@ -1,5 +1,7 @@
 package no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.kafka.messages
 
+import com.fasterxml.jackson.annotation.JsonIgnore
+import no.nav.pensjon.opptjening.omsorgsopptjening.felles.Periode
 import java.time.YearMonth
 
 
@@ -22,4 +24,7 @@ data class BarnetrygdPeriode(
     val utbetaltPerMnd: Int,
     val stønadFom: YearMonth,
     val stønadTom: YearMonth
-)
+){
+    @JsonIgnore
+    val periode: Periode = Periode(stønadFom, stønadTom)
+}

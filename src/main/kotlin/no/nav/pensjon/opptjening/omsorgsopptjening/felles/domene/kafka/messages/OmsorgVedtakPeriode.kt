@@ -1,5 +1,6 @@
 package no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.kafka.messages
 
+import no.nav.pensjon.opptjening.omsorgsopptjening.felles.Periode
 import java.time.YearMonth
 
 
@@ -8,19 +9,15 @@ data class OmsorgsArbeidKey(val omsorgsyter: String, val omsorgsAr: Int, val oms
 
 
 data class OmsorgsGrunnlag(
-    val omsorgsyter: Person,
+    val omsorgsyter: String,
     val omsorgsAr: Int,
     val omsorgstype: Omsorgstype,
     val kjoreHash: String,
     val kilde: Kilde,
     val omsorgsSaker: List<OmsorgsSak>
 ) {
-    fun hentPersoner(): Set<Person> {
-        return (
-                omsorgsSaker.flatMap { sak ->
-                    sak.omsorgVedtakPeriode.flatMap { arbeid -> arbeid.omsorgsmottakere } + sak.omsorgVedtakPeriode.flatMap { arbeid -> arbeid.omsorgsytere }
-                } + omsorgsyter
-                ).toSet()
+    fun hentPersoner(): Set<String> {
+        return omsorgsSaker.map { it.omsorgsyter }.toSet() + omsorgsSaker.flatMap { it.omsorgVedtakPeriode }.map { it.omsorgsmottaker }.toSet()
     }
 }
 
@@ -35,6 +32,7 @@ enum class Kilde {
 }
 
 data class OmsorgsSak(
+    val omsorgsyter: String,
     val omsorgVedtakPeriode: List<OmsorgVedtakPeriode>
 )
 
@@ -42,10 +40,10 @@ data class OmsorgVedtakPeriode(
     val fom: YearMonth,
     val tom: YearMonth,
     val prosent: Int,
-    val omsorgsytere: Set<Person>,
-    val omsorgsmottakere: Set<Person>,
-    val landstilknytning: Landstilknytning
-)
+    val omsorgsmottaker: String
+){
+    val periode = Periode(fom, tom)
+}
 
 enum class Landstilknytning {
     EØS,
