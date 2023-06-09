@@ -4,7 +4,7 @@ import no.nav.pensjon.opptjening.omsorgsopptjening.felles.Periode
 import java.time.YearMonth
 
 
-data class OmsorgsArbeidKey(val omsorgsyter: String, val omsorgsAr: Int, val omsorgsType: Omsorgstype)
+data class OmsorgsArbeidKey(val omsorgsyter: String, val omsorgsType: Omsorgstype)
 
 
 
