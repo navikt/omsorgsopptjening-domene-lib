@@ -10,7 +10,6 @@ data class OmsorgsArbeidKey(val omsorgsyter: String, val omsorgsAr: Int, val oms
 
 data class OmsorgsGrunnlag(
     val omsorgsyter: String,
-    val omsorgsAr: Int,
     val omsorgstype: Omsorgstype,
     val kjoreHash: String,
     val kilde: Kilde,

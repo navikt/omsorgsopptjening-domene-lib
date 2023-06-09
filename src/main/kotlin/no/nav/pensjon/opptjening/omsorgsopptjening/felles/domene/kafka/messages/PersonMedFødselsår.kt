@@ -1,5 +1,8 @@
 package no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.kafka.messages
 
+import java.time.LocalDate
+import java.time.Month
+
 class PersonMedFødselsår(
     val fnr: String,
     val fodselsAr: Int
@@ -9,6 +12,25 @@ class PersonMedFødselsår(
 
     fun alder(aarstall: Int): Int {
         return aarstall - fodselsAr
+    }
+
+    fun erFødt(årstall: Int): Boolean {
+        return alder(årstall) == 0
+    }
+
+    fun erFødt(årstall: Int, måned: Month): Boolean {
+        return fødselsdato().let { it.year == årstall && it.month == måned }
+    }
+
+    fun fødselsdato(): LocalDate {
+        return LocalDate.of(fodselsAr, fnrMonth(), fnrDay())
+    }
+
+    private fun fnrDay(): Int {
+        return Integer.parseInt(fnr.substring(0, 2))
+    }
+    private fun fnrMonth(): Month {
+        return Month.of(Integer.parseInt(fnr.substring(2, 4)))
     }
 }
 
