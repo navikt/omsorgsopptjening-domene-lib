@@ -42,10 +42,7 @@ class PeriodeTest {
 
     @Test
     fun `inneholder`() {
-        Periode(
-            fom = YearMonth.of(2023, Month.JANUARY),
-            tom = YearMonth.of(2023, Month.DECEMBER)
-        ).let {
+        Periode(2023).let {
             assertTrue {
                 it.inneholderMåned(YearMonth.of(2023, Month.JANUARY))
             }
@@ -60,10 +57,7 @@ class PeriodeTest {
 
     @Test
     fun `min and max`(){
-        Periode(
-            fom = YearMonth.of(2023, Month.JANUARY),
-            tom = YearMonth.of(2023, Month.DECEMBER)
-        ).let {
+        Periode(2023).let {
             assertEquals(YearMonth.of(2023, Month.JANUARY), it.min())
             assertEquals(YearMonth.of(2023, Month.DECEMBER), it.max())
         }

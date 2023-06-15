@@ -1,5 +1,6 @@
 package no.nav.pensjon.opptjening.omsorgsopptjening.felles
 
+import java.time.Month
 import java.time.YearMonth
 
 data class Periode private constructor(private val months: Set<YearMonth> = setOf()) {
@@ -7,6 +8,8 @@ data class Periode private constructor(private val months: Set<YearMonth> = setO
     constructor(fom: YearMonth, tom: YearMonth) : this((fom..tom).toSet())
 
     constructor() : this(setOf())
+
+    constructor(år: Int): this(YearMonth.of(år, Month.JANUARY), YearMonth.of(år, Month.DECEMBER))
 
     fun antallMoneder(): Int = alleMåneder().size
 
