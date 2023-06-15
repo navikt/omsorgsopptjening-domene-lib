@@ -12,9 +12,9 @@ class PersonMedFødselsårTest {
             fnr = "01048512345",
             fodselsAr = 1985
         ).let {
-            assertEquals(-1, it.alder(1984))
-            assertEquals(0, it.alder(1985))
-            assertEquals(1, it.alder(1986))
+            assertEquals(-1, it.alderVedUtløpAv(1984))
+            assertEquals(0, it.alderVedUtløpAv(1985))
+            assertEquals(1, it.alderVedUtløpAv(1986))
         }
     }
 

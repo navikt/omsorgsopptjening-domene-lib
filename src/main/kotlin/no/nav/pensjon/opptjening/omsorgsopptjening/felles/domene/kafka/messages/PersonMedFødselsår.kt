@@ -10,12 +10,12 @@ class PersonMedFødselsår(
     override fun equals(other: Any?) = this === other || (other is PersonMedFødselsår && this.fnr == other.fnr)
     override fun hashCode() = fnr.hashCode()
 
-    fun alder(aarstall: Int): Int {
+    fun alderVedUtløpAv(aarstall: Int): Int {
         return aarstall - fodselsAr
     }
 
     fun erFødt(årstall: Int): Boolean {
-        return alder(årstall) == 0
+        return alderVedUtløpAv(årstall) == 0
     }
 
     fun erFødt(årstall: Int, måned: Month): Boolean {
