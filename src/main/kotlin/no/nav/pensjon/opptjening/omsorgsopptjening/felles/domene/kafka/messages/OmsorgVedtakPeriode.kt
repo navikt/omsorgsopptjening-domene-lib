@@ -1,6 +1,7 @@
 package no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.kafka.messages
 
 import no.nav.pensjon.opptjening.omsorgsopptjening.felles.Periode
+import no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.kafka.RådataFraKilde
 import java.time.YearMonth
 
 
@@ -13,7 +14,8 @@ data class OmsorgsGrunnlag(
     val omsorgstype: Omsorgstype,
     val kjoreHash: String,
     val kilde: Kilde,
-    val omsorgsSaker: List<OmsorgsSak>
+    val omsorgsSaker: List<OmsorgsSak>,
+    val rådata: RådataFraKilde,
 ) {
     fun hentPersoner(): Set<String> {
         return omsorgsSaker.map { it.omsorgsyter }.toSet() + omsorgsSaker.flatMap { it.omsorgVedtakPeriode }.map { it.omsorgsmottaker }.toSet()
