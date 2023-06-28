@@ -15,7 +15,7 @@ repositories {
     mavenLocal()
     mavenCentral()
 
-    maven("https://maven.pkg.github.com/navikt/maven-release") {
+    maven("https://maven.pkg.github.com/navikt/${rootProject.name}") {
         credentials {
             username = System.getenv("GITHUB_ACTOR")
             password = System.getenv("GITHUB_TOKEN")
