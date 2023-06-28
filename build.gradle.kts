@@ -1,5 +1,4 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import java.net.URI
 
 plugins {
     id("org.jetbrains.kotlin.jvm") version "1.8.0"
@@ -14,11 +13,16 @@ java.sourceCompatibility = JavaVersion.VERSION_17
 repositories {
     mavenLocal()
     mavenCentral()
+}
 
-    maven("https://maven.pkg.github.com/navikt/${rootProject.name}") {
-        credentials {
-            username = System.getenv("GITHUB_ACTOR")
-            password = System.getenv("GITHUB_TOKEN")
+publishing {
+    repositories {
+        maven("https://maven.pkg.github.com/navikt/${rootProject.name}") {
+            name = "GitHubPackages"
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
+            }
         }
     }
 }
