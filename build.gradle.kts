@@ -49,6 +49,9 @@ release {
         requireBranch.set("main")
     }
 }
+tasks.afterReleaseBuild {
+    dependsOn(publishing)
+}
 
 tasks.test {
     useJUnitPlatform()
