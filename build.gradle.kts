@@ -1,9 +1,12 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import java.net.URI
 
 plugins {
     id("org.jetbrains.kotlin.jvm") version "1.8.0"
+    id("java-library")
+    id("maven-publish")
+    id("net.researchgate.release") version "3.0.2"
 }
-apply(from = "buildSrc/omsorgsopptjening-lib.gradle")
 
 group = "no.nav.pensjon.opptjening"
 java.sourceCompatibility = JavaVersion.VERSION_17
@@ -11,6 +14,18 @@ java.sourceCompatibility = JavaVersion.VERSION_17
 repositories {
     mavenLocal()
     mavenCentral()
+
+    maven("https://maven.pkg.github.com/navikt/maven-release") {
+        credentials {
+            username = System.getenv("GITHUB_ACTOR")
+            password = System.getenv("GITHUB_TOKEN")
+        }
+    }
+}
+
+java {
+    withJavadocJar()
+    withSourcesJar()
 }
 
 dependencies {
@@ -18,6 +33,12 @@ dependencies {
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.14.2")
 
     testImplementation(kotlin("test"))
+}
+
+release {
+    git {
+        requireBranch.set("main")
+    }
 }
 
 tasks.test {
