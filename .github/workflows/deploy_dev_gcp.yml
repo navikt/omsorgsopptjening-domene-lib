@@ -27,7 +27,9 @@ jobs:
       - name: Release with Gradle
         id: release
         run: |
-          ./gradlew release -Prelease.useAutomaticVersion=true
+          ./gradlew release -Prelease.useAutomaticVersion=true \
+          -Prelease.releaseVersion=${{ env.RELEASE_VERSION }} \
+          -Prelease.newVersion=${{ env.NEXT_VERSION }}
 
       - name: 'Publiser release som maven-pakke'
         run: ./gradlew publish --stacktrace
