@@ -10,7 +10,7 @@ import java.time.YearMonth
  * Ett element pr. fagsak barnet er knyttet til.
  * Kan være andre personer enn mor og far.
  */
-data class BarnetrygdMelding(val list: List<BarnetrygdSak>)
+data class BarnetrygdMelding(val ident: String, val list: List<BarnetrygdSak>)
 
 data class BarnetrygdSak(
     val fagsakId: String,
