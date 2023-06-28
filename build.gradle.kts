@@ -25,6 +25,11 @@ publishing {
             }
         }
     }
+    publications {
+        register<MavenPublication>("GitHubPackages"){
+            from(components["java"])
+        }
+    }
 }
 
 java {
