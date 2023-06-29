@@ -1,4 +1,4 @@
-package no.nav.pensjon.opptjening.omsorgsopptjening.felles
+package no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.periode
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test

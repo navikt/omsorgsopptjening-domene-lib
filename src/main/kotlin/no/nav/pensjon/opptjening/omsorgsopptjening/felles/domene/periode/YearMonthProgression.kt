@@ -1,6 +1,5 @@
-package no.nav.pensjon.opptjening.omsorgsopptjening.felles
+package no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.periode
 
-import no.nav.pensjon.opptjening.omsorgsopptjening.felles.YearMonthIterator
 import java.time.YearMonth
 
 class YearMonthProgression(override val start: YearMonth, override val endInclusive: YearMonth) : Iterable<YearMonth>, ClosedRange<YearMonth> {

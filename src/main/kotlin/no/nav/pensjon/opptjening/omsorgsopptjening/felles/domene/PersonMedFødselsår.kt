@@ -1,4 +1,4 @@
-package no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.kafka.messages
+package no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene
 
 import java.time.LocalDate
 import java.time.Month

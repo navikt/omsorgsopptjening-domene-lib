@@ -1,4 +1,4 @@
-package no.nav.pensjon.opptjening.omsorgsopptjening.felles
+package no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.periode
 
 import java.time.YearMonth
 
