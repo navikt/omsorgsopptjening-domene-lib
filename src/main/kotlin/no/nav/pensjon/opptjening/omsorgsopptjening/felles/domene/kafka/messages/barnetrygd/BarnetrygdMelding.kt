@@ -30,9 +30,5 @@ data class Barnetrygdmelding(
         @JsonIgnore
         val periode: no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.periode.Periode = Periode(stønadFom, stønadTom)
     }
-
-    data class KafkaKey(
-        val ident: String
-    )
 }
 

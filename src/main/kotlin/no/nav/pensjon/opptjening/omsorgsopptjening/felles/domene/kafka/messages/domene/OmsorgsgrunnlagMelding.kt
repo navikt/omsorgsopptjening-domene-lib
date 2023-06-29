@@ -30,9 +30,5 @@ data class OmsorgsgrunnlagMelding(
     ) {
         val periode = Periode(fom, tom)
     }
-    data class KafkaKey(
-        val omsorgsyter: String,
-        val omsorgsType: Omsorgstype
-    )
 }
 
