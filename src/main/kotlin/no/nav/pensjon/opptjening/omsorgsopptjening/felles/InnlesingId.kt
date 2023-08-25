@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonValue
 import java.util.UUID
 
-data class CorrelationId(
+data class InnlesingId(
     private val value: UUID
 ) {
     fun toUUID(): UUID {
@@ -17,16 +17,16 @@ data class CorrelationId(
     }
 
     companion object {
-        const val identifier: String = "x-correlation-id"
+        const val identifier: String = "x-innlesing-id"
 
-        fun generate(): CorrelationId {
-            return CorrelationId(UUID.randomUUID())
+        fun generate(): InnlesingId {
+            return InnlesingId(UUID.randomUUID())
         }
 
         @JvmStatic
         @JsonCreator
-        fun fromString(value: String): CorrelationId {
-            return CorrelationId(UUID.fromString(value))
+        fun fromString(value: String): InnlesingId {
+            return InnlesingId(UUID.fromString(value))
         }
     }
 }

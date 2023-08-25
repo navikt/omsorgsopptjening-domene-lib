@@ -18,3 +18,12 @@ inline fun <reified T> deserialize(value: String): T {
     return mapper.readValue(value)
 }
 
+inline fun <reified T> List<T>.serializeList(): String {
+    val listType = mapper.typeFactory.constructCollectionLikeType(List::class.java, T::class.java)
+    return mapper.writerFor(listType).writeValueAsString(this)
+}
+
+inline fun <reified T> String.deserializeList(): List<T> {
+    val listType = mapper.typeFactory.constructCollectionLikeType(List::class.java, T::class.java)
+    return mapper.readerFor(listType).readValue(this)
+}
