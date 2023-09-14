@@ -1,7 +1,8 @@
 package no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.kafka.messages.domene
 
 enum class Omsorgstype {
-    BARNETRYGD,
-    HJELPESTØNAD_SATS_3,
-    HJELPESTØNAD_SATS_4
+    DELT_BARNETRYGD,
+    FULL_BARNETRYGD,
+    HJELPESTØNAD_FORHØYET_SATS_3,
+    HJELPESTØNAD_FORHØYET_SATS_4;
 }

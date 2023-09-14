@@ -28,6 +28,10 @@ data class Periode private constructor(private val months: Set<YearMonth> = setO
             }
     }
 
+    fun overlappendeMåneder(måneder: Set<YearMonth>): Set<YearMonth> {
+        return months.union(måneder)
+    }
+
     fun inneholderMåned(måned: YearMonth): Boolean {
         return months.contains(måned)
     }
