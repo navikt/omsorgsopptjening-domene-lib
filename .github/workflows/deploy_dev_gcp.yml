@@ -38,3 +38,5 @@ jobs:
       - name: 'Sett neste versjon'
         id: release
         run: ./gradlew release -Prelease.useAutomaticVersion=true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
