@@ -8,28 +8,41 @@ import java.time.YearMonth
 
 data class OmsorgsgrunnlagMelding(
     val omsorgsyter: String,
-    val omsorgstype: Omsorgstype,
-    val kilde: Kilde,
     val saker: List<Sak>,
     val rådata: RådataFraKilde,
     val innlesingId: InnlesingId,
     val correlationId: CorrelationId,
 ) {
     fun hentPersoner(): Set<String> {
-        return saker.map { it.omsorgsyter }.toSet() + saker.flatMap { it.vedtaksperioder }.map { it.omsorgsmottaker }
-            .toSet()
+        return hentOmsorgsytere() + hentOmsorgsmottakere()
+    }
+
+    fun hentOmsorgsytere(): Set<String> {
+        return saker.map { it.omsorgsyter }.toSet()
+    }
+
+    fun hentOmsorgsmottakere(): Set<String> {
+        return saker.flatMap { it.hentOmsorgsmottakere() }.toSet()
     }
 
     data class Sak(
         val omsorgsyter: String,
         val vedtaksperioder: List<VedtakPeriode>
-    )
+    ){
+        fun hentOmsorgsmottakere(): Set<String> {
+            return vedtaksperioder.map { it.omsorgsmottaker }.toSet()
+        }
+
+        fun leggTilVedtaksperiode(vedtakPeriode: VedtakPeriode): Sak {
+            return copy(vedtaksperioder = this.vedtaksperioder + vedtakPeriode)
+        }
+    }
 
     data class VedtakPeriode(
         val fom: YearMonth,
         val tom: YearMonth,
-        val prosent: Int,
-        val omsorgsmottaker: String
+        val omsorgstype: Omsorgstype,
+        val omsorgsmottaker: String,
     ) {
         val periode = Periode(fom, tom)
     }
