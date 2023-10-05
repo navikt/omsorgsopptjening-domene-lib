@@ -43,8 +43,7 @@ data class OmsorgsgrunnlagMelding(
         val tom: YearMonth,
         val omsorgstype: Omsorgstype,
         val omsorgsmottaker: String,
-    ) {
-        val periode = Periode(fom, tom)
-    }
+        val kilde: Kilde,
+    )
 }
 
