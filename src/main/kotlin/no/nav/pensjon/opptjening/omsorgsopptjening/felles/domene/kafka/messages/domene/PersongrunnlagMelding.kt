@@ -2,13 +2,12 @@ package no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.kafka.messages
 
 import no.nav.pensjon.opptjening.omsorgsopptjening.felles.CorrelationId
 import no.nav.pensjon.opptjening.omsorgsopptjening.felles.InnlesingId
-import no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.periode.Periode
 import no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.kafka.RådataFraKilde
 import java.time.YearMonth
 
-data class OmsorgsgrunnlagMelding(
+data class PersongrunnlagMelding(
     val omsorgsyter: String,
-    val saker: List<Sak>,
+    val persongrunnlag: List<Persongrunnlag>,
     val rådata: RådataFraKilde,
     val innlesingId: InnlesingId,
     val correlationId: CorrelationId,
@@ -18,27 +17,23 @@ data class OmsorgsgrunnlagMelding(
     }
 
     fun hentOmsorgsytere(): Set<String> {
-        return saker.map { it.omsorgsyter }.toSet()
+        return persongrunnlag.map { it.omsorgsyter }.toSet()
     }
 
     fun hentOmsorgsmottakere(): Set<String> {
-        return saker.flatMap { it.hentOmsorgsmottakere() }.toSet()
+        return persongrunnlag.flatMap { it.hentOmsorgsmottakere() }.toSet()
     }
 
-    data class Sak(
+    data class Persongrunnlag(
         val omsorgsyter: String,
-        val vedtaksperioder: List<VedtakPeriode>
+        val omsorgsperioder: List<Omsorgsperiode>
     ){
         fun hentOmsorgsmottakere(): Set<String> {
-            return vedtaksperioder.map { it.omsorgsmottaker }.toSet()
-        }
-
-        fun leggTilVedtaksperiode(vedtakPeriode: VedtakPeriode): Sak {
-            return copy(vedtaksperioder = this.vedtaksperioder + vedtakPeriode)
+            return omsorgsperioder.map { it.omsorgsmottaker }.toSet()
         }
     }
 
-    data class VedtakPeriode(
+    data class Omsorgsperiode(
         val fom: YearMonth,
         val tom: YearMonth,
         val omsorgstype: Omsorgstype,
