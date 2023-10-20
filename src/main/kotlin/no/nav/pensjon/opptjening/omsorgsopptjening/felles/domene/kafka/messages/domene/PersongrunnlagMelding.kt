@@ -24,6 +24,18 @@ data class PersongrunnlagMelding(
         return persongrunnlag.flatMap { it.hentOmsorgsmottakere() }.toSet()
     }
 
+//    val personIdent: String,
+//    val delingsprosentYtelse: YtelseProsent,
+//    val ytelseTypeEkstern: YtelseTypeEkstern?,
+//    val utbetaltPerMnd: Int,
+//    val stønadFom: YearMonth,
+//    val stønadTom: YearMonth,
+//    val sakstypeEkstern: SakstypeEkstern, //LANDSTILKNYTNING RELATERT
+//    val kildesystem: String = "BA",
+//    val pensjonstrygdet: Boolean? = null, //MEDLEMSKAPSRELATERT
+//    val norgeErSekundærlandMedNullUtbetaling: Boolean? = false, //LANDSTILKNYTNING RELATERT
+
+
     data class Persongrunnlag(
         val omsorgsyter: String,
         val omsorgsperioder: List<Omsorgsperiode>
@@ -39,6 +51,7 @@ data class PersongrunnlagMelding(
         val omsorgstype: Omsorgstype,
         val omsorgsmottaker: String,
         val kilde: Kilde,
+        val medlemskap: MedlemIFolketrygden
     )
 }
 
