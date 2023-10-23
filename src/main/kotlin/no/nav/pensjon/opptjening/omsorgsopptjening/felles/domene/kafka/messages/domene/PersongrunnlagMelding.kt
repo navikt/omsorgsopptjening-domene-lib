@@ -52,7 +52,8 @@ data class PersongrunnlagMelding(
         val omsorgsmottaker: String,
         val kilde: Kilde,
         val medlemskap: MedlemIFolketrygden,
-        val utbetalt: Int
+        val utbetalt: Int,
+        val landstilknytning: Landstilknytning
     )
 }
 
