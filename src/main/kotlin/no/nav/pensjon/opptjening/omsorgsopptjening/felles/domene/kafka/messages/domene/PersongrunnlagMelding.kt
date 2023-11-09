@@ -2,13 +2,13 @@ package no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.kafka.messages
 
 import no.nav.pensjon.opptjening.omsorgsopptjening.felles.CorrelationId
 import no.nav.pensjon.opptjening.omsorgsopptjening.felles.InnlesingId
-import no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.kafka.RådataFraKilde
+import no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.kafka.Rådata
 import java.time.YearMonth
 
 data class PersongrunnlagMelding(
     val omsorgsyter: String,
     val persongrunnlag: List<Persongrunnlag>,
-    val rådata: RådataFraKilde,
+    val rådata: Rådata,
     val innlesingId: InnlesingId,
     val correlationId: CorrelationId,
 ) {
