@@ -1,10 +1,11 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.jetbrains.kotlin.jvm") version "1.8.0"
+    id("org.jetbrains.kotlin.jvm") version "1.9.10"
     id("java-library")
     id("maven-publish")
     id("net.researchgate.release") version "3.0.2"
+    id("com.github.ben-manes.versions") version "0.50.0"
 }
 
 group = "no.nav.pensjon.opptjening"
