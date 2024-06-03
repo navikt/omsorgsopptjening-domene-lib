@@ -2,13 +2,11 @@ package no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.periode
 
 import no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.kafka.messages.domene.KanSlåsSammen.Companion.slåSammenLike
 import no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.periode.Periode.Companion.april
-import no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.periode.Periode.Companion.desember
 import no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.periode.Periode.Companion.februar
 import no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.periode.Periode.Companion.januar
 import no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.periode.Periode.Companion.mai
 import no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.periode.Periode.Companion.mars
 import no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.periode.Periode.Companion.periode
-import no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.periode.Periode.Companion.september
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows

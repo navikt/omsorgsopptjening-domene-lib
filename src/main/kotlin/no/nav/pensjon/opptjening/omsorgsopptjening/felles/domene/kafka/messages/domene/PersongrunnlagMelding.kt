@@ -165,4 +165,3 @@ data class PersongrunnlagMelding(
         }
     }
 }
-
