@@ -1,7 +1,8 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.jetbrains.kotlin.jvm") version "2.0.0"
+    val kotlinVersion = "2.0.20"
+    id("org.jetbrains.kotlin.jvm") version kotlinVersion
     id("java-library")
     id("maven-publish")
     id("net.researchgate.release") version "3.0.2"
