@@ -9,9 +9,5 @@ data class RådataFraKilde(
 
 data class Rådata(
     @JsonValue
-    private val data: MutableList<RådataFraKilde> = mutableListOf()
-) {
-    fun leggTil(rådata: RådataFraKilde) {
-        data.add(rådata)
-    }
-}
+    private val data: List<RådataFraKilde> = emptyList()
+)
