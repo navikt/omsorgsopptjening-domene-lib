@@ -8,21 +8,19 @@ import kotlin.test.Test
 class RådataTest {
     @Test
     fun `serialisering og deserialisering`() {
-        val rådata = Rådata().apply {
-            leggTil(
+        val rådata = Rådata(
+            listOf(
                 RådataFraKilde(
                     mapOf(
                         "a" to "b",
                         "aa" to "bb"
                     )
-                )
-            )
-            leggTil(
+                ),
                 RådataFraKilde(
                     mapOf("c" to "d")
                 )
             )
-        }
+        )
 
         val serialisert = jacksonObjectMapper().writeValueAsString(rådata)
 
