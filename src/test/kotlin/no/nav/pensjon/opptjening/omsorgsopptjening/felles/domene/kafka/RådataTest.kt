@@ -3,6 +3,7 @@ package no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.kafka
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.skyscreamer.jsonassert.JSONAssert
 import kotlin.test.Test
 
 class RådataTest {
@@ -23,11 +24,13 @@ class RådataTest {
         )
 
         val serialisert = jacksonObjectMapper().writeValueAsString(rådata)
-
-        assertEquals("""[{"a":"b","aa":"bb"},{"c":"d"}]""", serialisert)
+        JSONAssert.assertEquals(
+            """[{"a":"b","aa":"bb"},{"c":"d"}]""",
+            serialisert,
+            false,
+        )
 
         val deserialisert = jacksonObjectMapper().readValue<Rådata>(serialisert)
-
         assertEquals(rådata, deserialisert)
     }
 }

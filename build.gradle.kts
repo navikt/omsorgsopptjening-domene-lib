@@ -51,6 +51,7 @@ dependencies {
 
     testImplementation(kotlin("test"))
     testImplementation("org.assertj:assertj-core:3.26.3")
+    testImplementation("org.skyscreamer:jsonassert:1.5.3")
 }
 
 release {
