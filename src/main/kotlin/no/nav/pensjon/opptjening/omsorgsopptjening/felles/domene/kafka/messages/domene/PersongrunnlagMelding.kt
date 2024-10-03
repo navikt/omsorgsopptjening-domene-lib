@@ -78,7 +78,7 @@ data class PersongrunnlagMelding(
             }
         }
 
-        fun leggTilHjelpestønad(hjelpestønadsperioder: List<Hjelpestønadperiode>): Persongrunnlag {
+        fun medHjelpestønadPerioder(hjelpestønadsperioder: List<Hjelpestønadperiode>): Persongrunnlag {
             return of(
                 omsorgsyter = omsorgsyter,
                 omsorgsperioder = omsorgsperioder,
