@@ -10,4 +10,4 @@ data class RådataFraKilde(
 data class Rådata(
     @JsonValue
     private val data: List<RådataFraKilde> = emptyList()
-)
+) : List<RådataFraKilde> by data

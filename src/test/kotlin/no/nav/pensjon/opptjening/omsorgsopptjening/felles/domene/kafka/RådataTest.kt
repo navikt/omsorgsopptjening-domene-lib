@@ -2,7 +2,7 @@ package no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.kafka
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
-import org.junit.jupiter.api.Assertions.assertEquals
+import org.assertj.core.api.Assertions.assertThat
 import org.skyscreamer.jsonassert.JSONAssert
 import kotlin.test.Test
 
@@ -31,6 +31,24 @@ class RådataTest {
         )
 
         val deserialisert = jacksonObjectMapper().readValue<Rådata>(serialisert)
-        assertEquals(rådata, deserialisert)
+        assertThat(deserialisert).isEqualTo(rådata)
+    }
+
+    @Test
+    fun `uthenting av data`() {
+        val rådata = Rådata(
+            listOf(
+                RådataFraKilde(
+                    mapOf(
+                        "a" to "b",
+                        "aa" to "bb"
+                    )
+                ),
+                RådataFraKilde(
+                    mapOf("c" to "d")
+                )
+            )
+        )
+        assertThat(rådata[0]["a"]).isEqualTo("b")
     }
 }
