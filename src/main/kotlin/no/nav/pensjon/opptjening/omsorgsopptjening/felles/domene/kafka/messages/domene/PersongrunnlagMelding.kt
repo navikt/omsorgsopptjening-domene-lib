@@ -10,6 +10,7 @@ import java.time.YearMonth
 data class PersongrunnlagMelding(
     val omsorgsyter: String,
     val persongrunnlag: List<Persongrunnlag>,
+    val feilinfo: Feilinformasjon? = null,
     val rådata: Rådata,
     val innlesingId: InnlesingId,
     val correlationId: CorrelationId,
@@ -44,7 +45,7 @@ data class PersongrunnlagMelding(
                     require(
                         perioderForOmsorgsmottaker.none {
                             it.overlappendeMåneder((perioderForOmsorgsmottaker - it).flatMap { it.alleMåneder() }
-                                                       .toSet()).isNotEmpty()
+                                .toSet()).isNotEmpty()
                         }
                     ) { "Overlappende perioder for samme omsorgsmottaker" }
                 }
@@ -58,7 +59,7 @@ data class PersongrunnlagMelding(
                     require(
                         perioderForOmsorgsmottaker.none {
                             it.overlappendeMåneder((perioderForOmsorgsmottaker - it).flatMap { it.alleMåneder() }
-                                                       .toSet()).isNotEmpty()
+                                .toSet()).isNotEmpty()
                         }
                     ) { "Overlappende perioder for samme omsorgsmottaker" }
                 }
@@ -128,6 +129,10 @@ data class PersongrunnlagMelding(
                 tom = maxOf(tom, other.tom)
             )
         }
+    }
+
+    fun harFeilet() : Boolean {
+        return feilinfo != null
     }
 
     data class Hjelpestønadperiode(
