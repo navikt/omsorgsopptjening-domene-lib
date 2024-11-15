@@ -1,6 +1,8 @@
 package no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.kafka.messages.domene
 
-sealed class Feilinformasjon {
+open class OpenFeilinformasjon
+
+sealed class Feilinformasjon : OpenFeilinformasjon() {
     data class OverlappendeBarnetrygdperioder(
         val message: String
     ) : Feilinformasjon()
@@ -11,6 +13,8 @@ sealed class Feilinformasjon {
 
     data class UgyldigIdent(
         val message: String,
+        val exceptionType: String,
+        val exceptionMessage: String,
         val ident: String,
         val identRolle: IdentRolle,
     ) : Feilinformasjon()

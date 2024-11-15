@@ -10,7 +10,7 @@ import java.time.YearMonth
 data class PersongrunnlagMelding(
     val omsorgsyter: String,
     val persongrunnlag: List<Persongrunnlag>,
-    val feilinfo: Feilinformasjon? = null,
+    val feilinfo: List<Feilinformasjon> = emptyList(),
     val rådata: Rådata,
     val innlesingId: InnlesingId,
     val correlationId: CorrelationId,
@@ -25,6 +25,10 @@ data class PersongrunnlagMelding(
 
     fun hentOmsorgsmottakere(): Set<String> {
         return persongrunnlag.flatMap { it.hentOmsorgsmottakere() }.toSet()
+    }
+
+    fun harFeilet(): Boolean {
+        return feilinfo.isNotEmpty()
     }
 
     data class Persongrunnlag(
@@ -129,10 +133,6 @@ data class PersongrunnlagMelding(
                 tom = maxOf(tom, other.tom)
             )
         }
-    }
-
-    fun harFeilet() : Boolean {
-        return feilinfo != null
     }
 
     data class Hjelpestønadperiode(
