@@ -1,5 +1,10 @@
 package no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.kafka.messages.domene
 
+import no.nav.pensjon.opptjening.omsorgsopptjening.felles.CorrelationId
+import no.nav.pensjon.opptjening.omsorgsopptjening.felles.InnlesingId
+import no.nav.pensjon.opptjening.omsorgsopptjening.felles.deserialize
+import no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.kafka.Rådata
+import no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.kafka.RådataFraKilde
 import no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.periode.Periode.Companion.april
 import no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.periode.Periode.Companion.desember
 import no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.periode.Periode.Companion.februar
@@ -9,12 +14,117 @@ import no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.periode.Periode
 import no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.periode.Periode.Companion.mai
 import no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.periode.Periode.Companion.mars
 import no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.periode.Periode.Companion.november
+import no.nav.pensjon.opptjening.omsorgsopptjening.felles.serialize
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
+import org.skyscreamer.jsonassert.JSONAssert
 
 class PersongrunnlagMeldingTest {
+
+    @Test
+    fun `kan serialisere og deserialisere`() {
+        val m = PersongrunnlagMelding(
+            omsorgsyter = "o",
+            persongrunnlag = listOf(
+                PersongrunnlagMelding.Persongrunnlag(
+                    omsorgsyter = "o",
+                    omsorgsperioder = listOf(
+                        PersongrunnlagMelding.Omsorgsperiode(
+                            fom = januar(2022),
+                            tom = april(2022),
+                            omsorgsmottaker = "b",
+                            omsorgstype = Omsorgstype.FULL_BARNETRYGD,
+                            kilde = Kilde.BARNETRYGD,
+                            utbetalt = 2000,
+                            landstilknytning = Landstilknytning.NORGE,
+                        ),
+                    ),
+                    hjelpestønadsperioder = listOf(
+                        PersongrunnlagMelding.Hjelpestønadperiode(
+                            fom = januar(2022),
+                            tom = april(2022),
+                            omsorgsmottaker = "b",
+                            omsorgstype = Omsorgstype.HJELPESTØNAD_FORHØYET_SATS_4,
+                            kilde = Kilde.INFOTRYGD,
+                        ),
+                    )
+                )
+            ),
+            feilinfo = listOf(
+                Feilinformasjon.OverlappendeBarnetrygdperioder("bt")
+            ),
+            rådata = Rådata(
+                data = listOf(
+                    RådataFraKilde(data = mapOf("a" to "b")),
+                )
+            ),
+            innlesingId = InnlesingId.fromString("ecbfa0ee-da70-4abd-a8f3-b84319b36bf1"),
+            correlationId = CorrelationId.fromString("3b16c8bf-4682-442d-975e-8be450cf3877")
+        )
+
+        val expected = """
+          {"omsorgsyter":"o","persongrunnlag":[{"omsorgsyter":"o","omsorgsperioder":[{"fom":"2022-01","tom":"2022-04","omsorgstype":"FULL_BARNETRYGD","omsorgsmottaker":"b","kilde":"BARNETRYGD","utbetalt":2000,"landstilknytning":"NORGE"}],"hjelpestønadsperioder":[{"fom":"2022-01","tom":"2022-04","omsorgstype":"HJELPESTØNAD_FORHØYET_SATS_4","omsorgsmottaker":"b","kilde":"INFOTRYGD"}]}],"feilinfo":[{"type":"OverlappendeBarnetrygdperioder","message":"bt"}],"rådata":[{"a":"b"}],"innlesingId":"ecbfa0ee-da70-4abd-a8f3-b84319b36bf1","correlationId":"3b16c8bf-4682-442d-975e-8be450cf3877"}
+        """.trimIndent()
+
+        val serialized = serialize(m)
+
+        JSONAssert.assertEquals(expected, serialized, true)
+
+        val deserialized = deserialize<PersongrunnlagMelding>(serialized)
+
+        assertThat(deserialized).isEqualTo(m)
+    }
+
+    @Test
+    fun `deserialisering er bakoverkompatibel for manglende feilinformasjon`() {
+        val serialized = """
+          {"omsorgsyter":"o","persongrunnlag":[{"omsorgsyter":"o","omsorgsperioder":[{"fom":"2022-01","tom":"2022-04","omsorgstype":"FULL_BARNETRYGD","omsorgsmottaker":"b","kilde":"BARNETRYGD","utbetalt":2000,"landstilknytning":"NORGE"}],"hjelpestønadsperioder":[{"fom":"2022-01","tom":"2022-04","omsorgstype":"HJELPESTØNAD_FORHØYET_SATS_4","omsorgsmottaker":"b","kilde":"INFOTRYGD"}]}],"rådata":[{"a":"b"}],"innlesingId":"ecbfa0ee-da70-4abd-a8f3-b84319b36bf1","correlationId":"3b16c8bf-4682-442d-975e-8be450cf3877"}
+        """.trimIndent()
+
+        val expected = PersongrunnlagMelding(
+            omsorgsyter = "o",
+            persongrunnlag = listOf(
+                PersongrunnlagMelding.Persongrunnlag(
+                    omsorgsyter = "o",
+                    omsorgsperioder = listOf(
+                        PersongrunnlagMelding.Omsorgsperiode(
+                            fom = januar(2022),
+                            tom = april(2022),
+                            omsorgsmottaker = "b",
+                            omsorgstype = Omsorgstype.FULL_BARNETRYGD,
+                            kilde = Kilde.BARNETRYGD,
+                            utbetalt = 2000,
+                            landstilknytning = Landstilknytning.NORGE,
+                        ),
+                    ),
+                    hjelpestønadsperioder = listOf(
+                        PersongrunnlagMelding.Hjelpestønadperiode(
+                            fom = januar(2022),
+                            tom = april(2022),
+                            omsorgsmottaker = "b",
+                            omsorgstype = Omsorgstype.HJELPESTØNAD_FORHØYET_SATS_4,
+                            kilde = Kilde.INFOTRYGD,
+                        ),
+                    )
+                )
+            ),
+            feilinfo = emptyList(),
+            rådata = Rådata(
+                data = listOf(
+                    RådataFraKilde(data = mapOf("a" to "b")),
+                )
+            ),
+            innlesingId = InnlesingId.fromString("ecbfa0ee-da70-4abd-a8f3-b84319b36bf1"),
+            correlationId = CorrelationId.fromString("3b16c8bf-4682-442d-975e-8be450cf3877")
+        )
+
+        val deserialized = deserialize<PersongrunnlagMelding>(serialized)
+
+        assertThat(deserialized).isEqualTo(expected)
+    }
 
     @Test
     fun `ikke tillatt med overlappende perioder for samme omsorgsmottaker barnetrygd`() {
