@@ -27,6 +27,11 @@ sealed class Feilinformasjon : OpenFeilinformasjon() {
         val message: String
     ) : Feilinformasjon()
 
+    @JsonTypeName("FeilIDatagrunnlag")
+    data class FeilIDataGrunnlag(
+        val message: String
+    ) : Feilinformasjon()
+
     @JsonTypeName("UgyldigIdent")
     data class UgyldigIdent(
         val message: String,

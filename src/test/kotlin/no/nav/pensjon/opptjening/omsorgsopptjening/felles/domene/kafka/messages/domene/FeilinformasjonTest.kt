@@ -12,6 +12,7 @@ class FeilinformasjonTest {
     fun `kan serialisere og deserialisere`() {
         val obt = Feilinformasjon.OverlappendeBarnetrygdperioder("bt")
         val ohs = Feilinformasjon.OverlappendeHjelpestønadperioder("hs")
+        val fidg = Feilinformasjon.FeilIDataGrunnlag("fidg")
         val ui = Feilinformasjon.UgyldigIdent(
             message = "alterum",
             exceptionType = "gloriatur",
@@ -20,10 +21,10 @@ class FeilinformasjonTest {
             identRolle = IdentRolle.OMSORGSMOTTAKER_BARNETRYGD
         )
 
-        val feilinformasjon = listOf(obt, ohs, ui)
+        val feilinformasjon = listOf(obt, ohs, ui, fidg)
 
         val expected = """
-            [{"type":"OverlappendeBarnetrygdperioder","message":"bt"},{"type":"OverlappendeHjelpestønadperioder","message":"hs"},{"type":"UgyldigIdent","message":"alterum","exceptionType":"gloriatur","exceptionMessage":"hinc","ident":"cu","identRolle":"OMSORGSMOTTAKER_BARNETRYGD"}]
+            [{"type":"OverlappendeBarnetrygdperioder","message":"bt"},{"type":"OverlappendeHjelpestønadperioder","message":"hs"},{"type":"UgyldigIdent","message":"alterum","exceptionType":"gloriatur","exceptionMessage":"hinc","ident":"cu","identRolle":"OMSORGSMOTTAKER_BARNETRYGD"},{"type":"FeilIDatagrunnlag","message":"fidg"}]
         """.trimIndent()
 
         val serialized = feilinformasjon.serializeList()
@@ -35,5 +36,6 @@ class FeilinformasjonTest {
         assertThat(deserialized[0]).isEqualTo(obt)
         assertThat(deserialized[1]).isEqualTo(ohs)
         assertThat(deserialized[2]).isEqualTo(ui)
+        assertThat(deserialized[3]).isEqualTo(fidg)
     }
 }
