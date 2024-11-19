@@ -9,12 +9,18 @@ import java.time.YearMonth
 
 data class PersongrunnlagMelding(
     val omsorgsyter: String,
-    val persongrunnlag: List<Persongrunnlag>,
+    val persongrunnlag: List<Persongrunnlag> = emptyList(),
     val feilinfo: List<Feilinformasjon> = emptyList(),
     val rådata: Rådata,
     val innlesingId: InnlesingId,
     val correlationId: CorrelationId,
 ) {
+    init {
+        require((persongrunnlag.isEmpty().xor(feilinfo.isEmpty()))) {
+            "Meldingen må inneholde enten persongrunnlag eller feilinfo"
+        }
+    }
+
     fun hentPersoner(): Set<String> {
         return hentOmsorgsytere() + hentOmsorgsmottakere()
     }

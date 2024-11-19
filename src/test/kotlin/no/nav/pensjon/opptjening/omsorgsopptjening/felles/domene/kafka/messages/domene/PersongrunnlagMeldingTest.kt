@@ -25,7 +25,7 @@ import org.skyscreamer.jsonassert.JSONAssert
 class PersongrunnlagMeldingTest {
 
     @Test
-    fun `kan serialisere og deserialisere`() {
+    fun `kan serialisere og deserialisere melding med persongrunnlag`() {
         val m = PersongrunnlagMelding(
             omsorgsyter = "o",
             persongrunnlag = listOf(
@@ -53,6 +53,34 @@ class PersongrunnlagMeldingTest {
                     )
                 )
             ),
+            feilinfo = emptyList(),
+            rådata = Rådata(
+                data = listOf(
+                    RådataFraKilde(data = mapOf("a" to "b")),
+                )
+            ),
+            innlesingId = InnlesingId.fromString("ecbfa0ee-da70-4abd-a8f3-b84319b36bf1"),
+            correlationId = CorrelationId.fromString("3b16c8bf-4682-442d-975e-8be450cf3877")
+        )
+
+        val expected = """
+          {"omsorgsyter":"o","persongrunnlag":[{"omsorgsyter":"o","omsorgsperioder":[{"fom":"2022-01","tom":"2022-04","omsorgstype":"FULL_BARNETRYGD","omsorgsmottaker":"b","kilde":"BARNETRYGD","utbetalt":2000,"landstilknytning":"NORGE"}],"hjelpestønadsperioder":[{"fom":"2022-01","tom":"2022-04","omsorgstype":"HJELPESTØNAD_FORHØYET_SATS_4","omsorgsmottaker":"b","kilde":"INFOTRYGD"}]}],"feilinfo":[],"rådata":[{"a":"b"}],"innlesingId":"ecbfa0ee-da70-4abd-a8f3-b84319b36bf1","correlationId":"3b16c8bf-4682-442d-975e-8be450cf3877"}
+        """.trimIndent()
+
+        val serialized = serialize(m)
+
+        JSONAssert.assertEquals(expected, serialized, true)
+
+        val deserialized = deserialize<PersongrunnlagMelding>(serialized)
+
+        assertThat(deserialized).isEqualTo(m)
+    }
+
+    @Test
+    fun `kan serialisere og deserialisere melding med feilinfo`() {
+        val m = PersongrunnlagMelding(
+            omsorgsyter = "o",
+            persongrunnlag = emptyList(),
             feilinfo = listOf(
                 Feilinformasjon.OverlappendeBarnetrygdperioder("bt")
             ),
@@ -66,7 +94,7 @@ class PersongrunnlagMeldingTest {
         )
 
         val expected = """
-          {"omsorgsyter":"o","persongrunnlag":[{"omsorgsyter":"o","omsorgsperioder":[{"fom":"2022-01","tom":"2022-04","omsorgstype":"FULL_BARNETRYGD","omsorgsmottaker":"b","kilde":"BARNETRYGD","utbetalt":2000,"landstilknytning":"NORGE"}],"hjelpestønadsperioder":[{"fom":"2022-01","tom":"2022-04","omsorgstype":"HJELPESTØNAD_FORHØYET_SATS_4","omsorgsmottaker":"b","kilde":"INFOTRYGD"}]}],"feilinfo":[{"type":"OverlappendeBarnetrygdperioder","message":"bt"}],"rådata":[{"a":"b"}],"innlesingId":"ecbfa0ee-da70-4abd-a8f3-b84319b36bf1","correlationId":"3b16c8bf-4682-442d-975e-8be450cf3877"}
+          {"omsorgsyter":"o","persongrunnlag":[],"feilinfo":[{"type":"OverlappendeBarnetrygdperioder","message":"bt"}],"rådata":[{"a":"b"}],"innlesingId":"ecbfa0ee-da70-4abd-a8f3-b84319b36bf1","correlationId":"3b16c8bf-4682-442d-975e-8be450cf3877"}
         """.trimIndent()
 
         val serialized = serialize(m)
@@ -77,6 +105,7 @@ class PersongrunnlagMeldingTest {
 
         assertThat(deserialized).isEqualTo(m)
     }
+
 
     @Test
     fun `deserialisering er bakoverkompatibel for manglende feilinformasjon`() {
