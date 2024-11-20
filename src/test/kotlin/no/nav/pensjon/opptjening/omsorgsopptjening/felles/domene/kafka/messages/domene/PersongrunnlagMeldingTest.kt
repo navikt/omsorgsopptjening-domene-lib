@@ -82,7 +82,11 @@ class PersongrunnlagMeldingTest {
             omsorgsyter = "o",
             persongrunnlag = emptyList(),
             feilinfo = listOf(
-                Feilinformasjon.OverlappendeBarnetrygdperioder("bt")
+                Feilinformasjon.OverlappendeBarnetrygdperioder(
+                    "bt",
+                    exceptionType = "et",
+                    exceptionMessage = "em",
+                )
             ),
             rådata = Rådata(
                 data = listOf(
@@ -94,7 +98,7 @@ class PersongrunnlagMeldingTest {
         )
 
         val expected = """
-          {"omsorgsyter":"o","persongrunnlag":[],"feilinfo":[{"type":"OverlappendeBarnetrygdperioder","message":"bt"}],"rådata":[{"a":"b"}],"innlesingId":"ecbfa0ee-da70-4abd-a8f3-b84319b36bf1","correlationId":"3b16c8bf-4682-442d-975e-8be450cf3877"}
+          {"omsorgsyter":"o","persongrunnlag":[],"feilinfo":[{"type":"OverlappendeBarnetrygdperioder","message":"bt","exceptionType":"et","exceptionMessage":"em"
         """.trimIndent()
 
         val serialized = serialize(m)

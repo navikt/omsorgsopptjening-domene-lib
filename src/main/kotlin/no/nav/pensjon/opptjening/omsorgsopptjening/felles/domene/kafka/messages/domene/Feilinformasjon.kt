@@ -19,18 +19,24 @@ sealed class Feilinformasjon : OpenFeilinformasjon() {
 
     @JsonTypeName("OverlappendeBarnetrygdperioder")
     data class OverlappendeBarnetrygdperioder(
-        val message: String
+        val message: String,
+        val exceptionType: String,
+        val exceptionMessage: String,
     ) : Feilinformasjon()
 
     @JsonTypeName("OverlappendeHjelpestønadperioder")
     data class OverlappendeHjelpestønadperioder(
-        val message: String
+        val message: String,
+        val exceptionType: String,
+        val exceptionMessage: String,
     ) : Feilinformasjon()
 
     @JsonTypeName("FeilIDatagrunnlag")
     data class FeilIDataGrunnlag(
-        val message: String
-    ) : Feilinformasjon()
+        val message: String,
+        val exceptionType: String,
+        val exceptionMessage: String,
+        ) : Feilinformasjon()
 
     @JsonTypeName("UgyldigIdent")
     data class UgyldigIdent(

@@ -10,9 +10,21 @@ class FeilinformasjonTest {
 
     @Test
     fun `kan serialisere og deserialisere`() {
-        val obt = Feilinformasjon.OverlappendeBarnetrygdperioder("bt")
-        val ohs = Feilinformasjon.OverlappendeHjelpestønadperioder("hs")
-        val fidg = Feilinformasjon.FeilIDataGrunnlag("fidg")
+        val obt = Feilinformasjon.OverlappendeBarnetrygdperioder(
+            "bt",
+            exceptionType = "et",
+            exceptionMessage = "em",
+        )
+        val ohs = Feilinformasjon.OverlappendeHjelpestønadperioder(
+            "hs",
+            exceptionType = "et",
+            exceptionMessage = "em",
+        )
+        val fidg = Feilinformasjon.FeilIDataGrunnlag(
+            "fidg",
+            exceptionType = "et",
+            exceptionMessage = "em",
+        )
         val ui = Feilinformasjon.UgyldigIdent(
             message = "alterum",
             exceptionType = "gloriatur",
@@ -24,7 +36,7 @@ class FeilinformasjonTest {
         val feilinformasjon = listOf(obt, ohs, ui, fidg)
 
         val expected = """
-            [{"type":"OverlappendeBarnetrygdperioder","message":"bt"},{"type":"OverlappendeHjelpestønadperioder","message":"hs"},{"type":"UgyldigIdent","message":"alterum","exceptionType":"gloriatur","exceptionMessage":"hinc","ident":"cu","identRolle":"OMSORGSMOTTAKER_BARNETRYGD"},{"type":"FeilIDatagrunnlag","message":"fidg"}]
+            [{"type":"OverlappendeBarnetrygdperioder","message":"bt","exceptionType":"et","exceptionMessage":"em"},{"type":"OverlappendeHjelpestønadperioder","message":"hs","exceptionType":"et","exceptionMessage":"em"},{"type":"UgyldigIdent","message":"alterum","exceptionType":"gloriatur","exceptionMessage":"hinc","ident":"cu","identRolle":"OMSORGSMOTTAKER_BARNETRYGD"},{"type":"FeilIDatagrunnlag","message":"fidg","exceptionType":"et","exceptionMessage":"em"}]
         """.trimIndent()
 
         val serialized = feilinformasjon.serializeList()
