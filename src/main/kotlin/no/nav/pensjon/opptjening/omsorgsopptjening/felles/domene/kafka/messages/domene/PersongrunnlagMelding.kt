@@ -52,7 +52,7 @@ data class PersongrunnlagMelding(
             omsorgsperioder
                 .groupBy { it.omsorgsmottaker }
                 .mapValues { it.value.map { it.periode() } }
-                .forEach { (_, perioderForOmsorgsmottaker) ->
+                .forEach { (omsorgsmottaker, perioderForOmsorgsmottaker) ->
                     val overlappendePerioder = perioderForOmsorgsmottaker.filter {
                         it.overlappendeMåneder(
                             (perioderForOmsorgsmottaker - it)
@@ -62,8 +62,9 @@ data class PersongrunnlagMelding(
                     }
                     if (overlappendePerioder.isNotEmpty()) {
                         throw UgyldigPersongrunnlag.OverlappendeOmsorgsperiode(
-                            "Overlappende perioder for samme omsorgsmottaker",
-                            overlappendePerioder,
+                            msg = "Overlappende perioder for samme omsorgsmottaker",
+                            perioder = overlappendePerioder,
+                            omsorgsmottaker = omsorgsmottaker,
                         )
                     }
                 }
@@ -73,7 +74,7 @@ data class PersongrunnlagMelding(
             hjelpestønadsperioder
                 .groupBy { it.omsorgsmottaker }
                 .mapValues { it.value.map { it.periode() } }
-                .forEach { (_, perioderForOmsorgsmottaker) ->
+                .forEach { (omsorgsmottaker, perioderForOmsorgsmottaker) ->
                     val overlappendePerioder = perioderForOmsorgsmottaker.filter {
                         it.overlappendeMåneder(
                             (perioderForOmsorgsmottaker - it)
@@ -83,8 +84,9 @@ data class PersongrunnlagMelding(
                     }
                     if (overlappendePerioder.isNotEmpty()) {
                         throw UgyldigPersongrunnlag.OverlappendeOmsorgsperiode(
-                            "Overlappende perioder for samme omsorgsmottaker",
-                            overlappendePerioder,
+                            msg = "Overlappende perioder for samme omsorgsmottaker",
+                            perioder = overlappendePerioder,
+                            omsorgsmottaker = omsorgsmottaker
                         )
                     }
                 }
