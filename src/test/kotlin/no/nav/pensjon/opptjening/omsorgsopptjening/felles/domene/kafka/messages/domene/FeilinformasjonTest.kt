@@ -14,11 +14,13 @@ class FeilinformasjonTest {
             "bt",
             exceptionType = "et",
             exceptionMessage = "em",
+            perioder = emptyList(),
         )
         val ohs = Feilinformasjon.OverlappendeHjelpestønadperioder(
             "hs",
             exceptionType = "et",
             exceptionMessage = "em",
+            perioder = emptyList(),
         )
         val fidg = Feilinformasjon.FeilIDataGrunnlag(
             "fidg",
@@ -36,7 +38,7 @@ class FeilinformasjonTest {
         val feilinformasjon = listOf(obt, ohs, ui, fidg)
 
         val expected = """
-            [{"type":"OverlappendeBarnetrygdperioder","message":"bt","exceptionType":"et","exceptionMessage":"em"},{"type":"OverlappendeHjelpestønadperioder","message":"hs","exceptionType":"et","exceptionMessage":"em"},{"type":"UgyldigIdent","message":"alterum","exceptionType":"gloriatur","exceptionMessage":"hinc","ident":"cu","identRolle":"OMSORGSMOTTAKER_BARNETRYGD"},{"type":"FeilIDatagrunnlag","message":"fidg","exceptionType":"et","exceptionMessage":"em"}]
+            [{"type":"OverlappendeBarnetrygdperioder","message":"bt","exceptionType":"et","exceptionMessage":"em","perioder":[]},{"type":"OverlappendeHjelpestønadperioder","message":"hs","exceptionType":"et","exceptionMessage":"em","perioder":[]},{"type":"UgyldigIdent","message":"alterum","exceptionType":"gloriatur","exceptionMessage":"hinc","ident":"cu","identRolle":"OMSORGSMOTTAKER_BARNETRYGD"},{"type":"FeilIDatagrunnlag","message":"fidg","exceptionType":"et","exceptionMessage":"em"}]
         """.trimIndent()
 
         val serialized = feilinformasjon.serializeList()

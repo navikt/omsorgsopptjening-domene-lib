@@ -2,6 +2,7 @@ package no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.kafka.messages
 
 import no.nav.pensjon.opptjening.omsorgsopptjening.felles.CorrelationId
 import no.nav.pensjon.opptjening.omsorgsopptjening.felles.InnlesingId
+import no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.UgyldigPersongrunnlag
 import no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.kafka.Rådata
 import no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.kafka.messages.domene.KanSlåsSammen.Companion.slåSammenLike
 import no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.periode.Periode
@@ -52,12 +53,18 @@ data class PersongrunnlagMelding(
                 .groupBy { it.omsorgsmottaker }
                 .mapValues { it.value.map { it.periode() } }
                 .forEach { (_, perioderForOmsorgsmottaker) ->
-                    require(
-                        perioderForOmsorgsmottaker.none {
-                            it.overlappendeMåneder((perioderForOmsorgsmottaker - it).flatMap { it.alleMåneder() }
+                    val overlappendePerioder = perioderForOmsorgsmottaker.filter {
+                        it.overlappendeMåneder(
+                            (perioderForOmsorgsmottaker - it)
+                                .flatMap { it.alleMåneder() }
                                 .toSet()).isNotEmpty()
-                        }
-                    ) { "Overlappende perioder for samme omsorgsmottaker" }
+                    }
+                    if (overlappendePerioder.isNotEmpty()) {
+                        throw UgyldigPersongrunnlag.OverlappendeOmsorgsperiode(
+                            "Overlappende perioder for samme omsorgsmottaker",
+                            overlappendePerioder,
+                        )
+                    }
                 }
         }
 
@@ -66,12 +73,18 @@ data class PersongrunnlagMelding(
                 .groupBy { it.omsorgsmottaker }
                 .mapValues { it.value.map { it.periode() } }
                 .forEach { (_, perioderForOmsorgsmottaker) ->
-                    require(
-                        perioderForOmsorgsmottaker.none {
-                            it.overlappendeMåneder((perioderForOmsorgsmottaker - it).flatMap { it.alleMåneder() }
+                    val overlappendePerioder = perioderForOmsorgsmottaker.filter {
+                        it.overlappendeMåneder(
+                            (perioderForOmsorgsmottaker - it)
+                                .flatMap { it.alleMåneder() }
                                 .toSet()).isNotEmpty()
-                        }
-                    ) { "Overlappende perioder for samme omsorgsmottaker" }
+                    }
+                    if (overlappendePerioder.isNotEmpty()) {
+                        throw UgyldigPersongrunnlag.OverlappendeOmsorgsperiode(
+                            "Overlappende perioder for samme omsorgsmottaker",
+                            overlappendePerioder,
+                        )
+                    }
                 }
         }
 
@@ -112,7 +125,15 @@ data class PersongrunnlagMelding(
         val landstilknytning: Landstilknytning
     ) : KanSlåsSammen<Omsorgsperiode> {
         init {
-            require(omsorgstype == Omsorgstype.FULL_BARNETRYGD || omsorgstype == Omsorgstype.DELT_BARNETRYGD || omsorgstype == Omsorgstype.USIKKER_BARNETRYGD) { "Ugyldig omsorgstype" }
+            if (!gyldigOmsorgsType(omsorgstype)) {
+                throw UgyldigPersongrunnlag.UgyldigOmsorgstype(omsorgstype)
+            }
+        }
+
+        private fun gyldigOmsorgsType(omsorgstype: Omsorgstype): Boolean {
+            return omsorgstype == Omsorgstype.FULL_BARNETRYGD
+                    || omsorgstype == Omsorgstype.DELT_BARNETRYGD
+                    || omsorgstype == Omsorgstype.USIKKER_BARNETRYGD
         }
 
         fun periode(): Periode {

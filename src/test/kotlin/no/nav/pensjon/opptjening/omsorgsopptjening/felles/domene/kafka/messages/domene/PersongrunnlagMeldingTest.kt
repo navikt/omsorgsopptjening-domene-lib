@@ -3,6 +3,7 @@ package no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.kafka.messages
 import no.nav.pensjon.opptjening.omsorgsopptjening.felles.CorrelationId
 import no.nav.pensjon.opptjening.omsorgsopptjening.felles.InnlesingId
 import no.nav.pensjon.opptjening.omsorgsopptjening.felles.deserialize
+import no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.UgyldigPersongrunnlag
 import no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.kafka.Rådata
 import no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.kafka.RådataFraKilde
 import no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.periode.Periode.Companion.april
@@ -86,6 +87,7 @@ class PersongrunnlagMeldingTest {
                     "bt",
                     exceptionType = "et",
                     exceptionMessage = "em",
+                    perioder = emptyList(),
                 )
             ),
             rådata = Rådata(
@@ -98,7 +100,7 @@ class PersongrunnlagMeldingTest {
         )
 
         val expected = """
-          {"omsorgsyter":"o","persongrunnlag":[],"feilinfo":[{"type":"OverlappendeBarnetrygdperioder","message":"bt","exceptionType":"et","exceptionMessage":"em"}],"rådata":[{"a":"b"}],"innlesingId":"ecbfa0ee-da70-4abd-a8f3-b84319b36bf1","correlationId":"3b16c8bf-4682-442d-975e-8be450cf3877"}
+          {"omsorgsyter":"o","persongrunnlag":[],"feilinfo": [{"type":"OverlappendeBarnetrygdperioder","message":"bt","exceptionType":"et","exceptionMessage":"em","perioder":[]}],"rådata":[{"a":"b"}],"innlesingId":"ecbfa0ee-da70-4abd-a8f3-b84319b36bf1","correlationId":"3b16c8bf-4682-442d-975e-8be450cf3877"}
         """.trimIndent()
 
         val serialized = serialize(m)
@@ -162,7 +164,7 @@ class PersongrunnlagMeldingTest {
     @Test
     fun `ikke tillatt med overlappende perioder for samme omsorgsmottaker barnetrygd`() {
         val barn1 = "1"
-        assertThrows<IllegalArgumentException> {
+        assertThrows<UgyldigPersongrunnlag.OverlappendeOmsorgsperiode> {
             PersongrunnlagMelding.Persongrunnlag(
                 omsorgsyter = "o",
                 omsorgsperioder = listOf(
@@ -193,7 +195,7 @@ class PersongrunnlagMeldingTest {
     @Test
     fun `ikke tillatt med overlappende perioder for samme omsorgsmottaker hjelpestønad `() {
         val barn1 = "1"
-        assertThrows<IllegalArgumentException> {
+        assertThrows<UgyldigPersongrunnlag.OverlappendeOmsorgsperiode> {
             PersongrunnlagMelding.Persongrunnlag(
                 omsorgsyter = "o",
                 omsorgsperioder = emptyList(),
