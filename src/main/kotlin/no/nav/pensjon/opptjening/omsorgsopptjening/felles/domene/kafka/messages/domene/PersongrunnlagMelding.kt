@@ -57,7 +57,8 @@ data class PersongrunnlagMelding(
                         it.overlappendeMåneder(
                             (perioderForOmsorgsmottaker - it)
                                 .flatMap { it.alleMåneder() }
-                                .toSet()).isNotEmpty()
+                                .toSet()
+                        ).isNotEmpty()
                     }
                     if (overlappendePerioder.isNotEmpty()) {
                         throw UgyldigPersongrunnlag.OverlappendeOmsorgsperiode(
@@ -77,7 +78,8 @@ data class PersongrunnlagMelding(
                         it.overlappendeMåneder(
                             (perioderForOmsorgsmottaker - it)
                                 .flatMap { it.alleMåneder() }
-                                .toSet()).isNotEmpty()
+                                .toSet()
+                        ).isNotEmpty()
                     }
                     if (overlappendePerioder.isNotEmpty()) {
                         throw UgyldigPersongrunnlag.OverlappendeOmsorgsperiode(
