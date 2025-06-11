@@ -1,3 +1,4 @@
+import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -7,7 +8,7 @@ plugins {
     id("java-library")
     id("maven-publish")
     id("net.researchgate.release") version "3.0.2"
-    id("com.github.ben-manes.versions") version "0.51.0"
+    id("com.github.ben-manes.versions") version "0.52.0"
 }
 
 group = "no.nav.pensjon.opptjening"
@@ -81,3 +82,14 @@ tasks.withType<Test> {
         )
     }
 }
+
+tasks.withType<DependencyUpdatesTask>().configureEach {
+    rejectVersionIf {
+        isNonStableVersion(candidate.version)
+    }
+}
+
+fun isNonStableVersion(version: String): Boolean {
+    return listOf("BETA","RC","-M",".CR").any { version.uppercase().contains(it) }
+}
+
