@@ -2,12 +2,14 @@ import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+val jacksonVersion = "2.19.0"
+
 plugins {
-    val kotlinVersion = "2.0.20"
+    val kotlinVersion = "2.1.21"
     id("org.jetbrains.kotlin.jvm") version kotlinVersion
     id("java-library")
     id("maven-publish")
-    id("net.researchgate.release") version "3.0.2"
+    id("net.researchgate.release") version "3.1.0"
     id("com.github.ben-manes.versions") version "0.52.0"
 }
 
@@ -47,11 +49,11 @@ java {
 }
 
 dependencies {
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.17.1")
-    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.17.1")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonVersion")
 
     testImplementation(kotlin("test"))
-    testImplementation("org.assertj:assertj-core:3.26.3")
+    testImplementation("org.assertj:assertj-core:3.27.3")
     testImplementation("org.skyscreamer:jsonassert:1.5.3")
 }
 
