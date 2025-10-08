@@ -2,7 +2,11 @@ import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-val jacksonVersion = "2.19.0"
+val jacksonVersion = "2.20.0"
+
+val assertJVersion = "3.27.6"
+val jsonAssertVersion = "1.5.3"
+
 
 plugins {
     val kotlinVersion = "2.1.21"
@@ -10,7 +14,7 @@ plugins {
     id("java-library")
     id("maven-publish")
     id("net.researchgate.release") version "3.1.0"
-    id("com.github.ben-manes.versions") version "0.52.0"
+    id("com.github.ben-manes.versions") version "0.53.0"
 }
 
 group = "no.nav.pensjon.opptjening"
@@ -53,8 +57,8 @@ dependencies {
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonVersion")
 
     testImplementation(kotlin("test"))
-    testImplementation("org.assertj:assertj-core:3.27.3")
-    testImplementation("org.skyscreamer:jsonassert:1.5.3")
+    testImplementation("org.assertj:assertj-core:$assertJVersion")
+    testImplementation("org.skyscreamer:jsonassert:$jsonAssertVersion")
 }
 
 release {
