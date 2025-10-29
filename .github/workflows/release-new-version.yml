@@ -1,10 +1,7 @@
 name: Release new version
 
 on:
-  push:
-    workflow_dispatch:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
   release:
