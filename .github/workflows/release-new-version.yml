@@ -20,7 +20,7 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-      - name: 'Capture version number for releas (1)e'
+      - name: 'Capture version number for release'
         run: |
           echo "VERSION=$(grep -v '^#' gradle.properties | grep 'version=' | cut -d '=' -f2 | xargs)" >> $GITHUB_ENV
           echo "COMMIT=$(echo ${{github.sha}} | cut -c 1-7)" >> $GITHUB_ENV
