@@ -9,6 +9,7 @@ jobs:
     permissions:
       contents: write
       packages: write
+    environment: release
     steps:
       - name: 'Pull repo'
         uses: actions/checkout@v5
@@ -19,32 +20,31 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
+      - name: 'Capture version number for releas (1)e'
+        run: |
+          echo "VERSION=$(grep -v '^#' gradle.properties | grep 'version=' | cut -d '=' -f2 | xargs)" >> $GITHUB_ENV
+          echo "COMMIT=$(echo ${{github.sha}} | cut -c 1-7)" >> $GITHUB_ENV
+
       - name: 'Sett opp bruker i git'
         run: git config user.email "${{ github.actor }}@users.noreply.github.com" && git config user.name "Github Actions"
 
-      - name: Grant execute permission for gradlew
+      - name: 'Grant execute permission for gradlew'
         run: chmod +x gradlew
 
-      - name: 'Build'
-        run: ./gradlew build --stacktrace
+      - name: 'Build and update version'
+        run: ../gradlew build release -Prelease.useAutomaticVersion=true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: 'Publiser release som maven-pakke'
-        run: ./gradlew publish --stacktrace
+      - name: 'Check out release-version'
+        uses: actions/checkout@v5
+        with:
+          ref: "release-${{ env.VERSION }}"
+
+      - name: 'Publish package'
+        run: ../gradlew publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: 'Sett neste versjon'
-        id: release
-        run: ./gradlew release -Prelease.useAutomaticVersion=true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: 'Sett versjons-informasjon'
-        run: |
-          echo "VERSION=$(grep ^version= gradle.properties | cut -d= -f2)" >> $GITHUB_ENV
-          echo "COMMIT=$(echo ${{github.sha}} | cut -c 1-7)" >> $GITHUB_ENV
 
       - name: 'Generate release info'
         run: |
