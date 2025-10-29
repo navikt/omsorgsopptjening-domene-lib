@@ -2,6 +2,7 @@ name: Release new version
 
 on:
   push:
+    workflow_dispatch:
     branches:
       - main
 
@@ -13,10 +14,10 @@ jobs:
       packages: write
     steps:
       - name: 'Pull repo'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: 'Java'
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           java-version: '21'
           distribution: 'temurin'
@@ -40,3 +41,18 @@ jobs:
         run: ./gradlew release -Prelease.useAutomaticVersion=true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 'Sett versjons-informasjon'
+        run: |
+          echo "VERSION=$(grep ^version= gradle.properties | cut -d= -f2)" >> $GITHUB_ENV
+          echo "COMMIT=$(echo ${{github.sha}} | cut -c 1-7)" >> $GITHUB_ENV
+
+      - name: 'Generate release info'
+        run: |
+          echo "Releaset ${{env.COMMIT}} som ${{ env.VERSION }}" > ../release_info.txt
+
+      - name: 'Upload release info'
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-info
+          path: release_info.txt

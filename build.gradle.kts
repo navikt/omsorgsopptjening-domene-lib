@@ -41,7 +41,7 @@ publishing {
         }
     }
     publications {
-        register<MavenPublication>("GitHubPackages"){
+        register<MavenPublication>("GitHubPackages") {
             from(components["java"])
         }
     }
@@ -63,7 +63,7 @@ dependencies {
 
 release {
     git {
-        requireBranch.set("main")
+        requireBranch = "main"
     }
 }
 
@@ -96,6 +96,6 @@ tasks.withType<DependencyUpdatesTask>().configureEach {
 }
 
 fun isNonStableVersion(version: String): Boolean {
-    return listOf("BETA","RC","-M",".CR").any { version.uppercase().contains(it) }
+    return listOf("BETA", "RC", "-M", ".CR").any { version.uppercase().contains(it) }
 }
 

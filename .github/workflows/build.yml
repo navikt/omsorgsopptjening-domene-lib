@@ -1,0 +1,25 @@
+name: Release new version
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+    steps:
+      - name: 'Pull repo'
+        uses: actions/checkout@v5
+
+      - name: 'Java'
+        uses: actions/setup-java@v5
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: 'Build'
+        run: ./gradlew build
