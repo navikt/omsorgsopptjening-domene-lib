@@ -27,6 +27,8 @@ jobs:
 
       - name: 'Build'
         run: ./gradlew build --stacktrace
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: 'Publiser release som maven-pakke'
         run: ./gradlew publish --stacktrace
