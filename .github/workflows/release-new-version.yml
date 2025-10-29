@@ -32,7 +32,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: 'Build and update version'
-        run: ../gradlew build release -Prelease.useAutomaticVersion=true
+        run: ./gradlew build release -Prelease.useAutomaticVersion=true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -42,7 +42,7 @@ jobs:
           ref: "release-${{ env.VERSION }}"
 
       - name: 'Publish package'
-        run: ../gradlew publish
+        run: ./gradlew publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
