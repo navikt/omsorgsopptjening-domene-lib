@@ -4,7 +4,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 val jacksonVersion = "2.20.0"
 
-val assertJVersion = "3.27.6"
+val assertJVersion = "3.27.7"
 val jsonAssertVersion = "1.5.3"
 
 
