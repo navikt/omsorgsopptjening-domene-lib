@@ -13,7 +13,7 @@ jobs:
       packages: read
     steps:
       - name: 'Pull repo'
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: 'Java'
         uses: actions/setup-java@v5
