@@ -126,7 +126,12 @@ data class PersongrunnlagMelding(
         val omsorgsmottaker: String,
         val kilde: Kilde,
         val utbetalt: Int,
-        val landstilknytning: Landstilknytning
+        val landstilknytning: Landstilknytning,
+        /**
+         * omsorgsyter mottar barnetrygd på grunnlag av på annen forelders rettigheter i Norge, men har selv
+         * ingen tilknytning til Norge og har derfor heller ingen pensjonsrettigheter.
+         */
+        val omsorgsyterHarSelvstendigRett: Boolean
     ) : KanSlåsSammen<Omsorgsperiode> {
         init {
             if (!gyldigOmsorgsType(omsorgstype)) {
@@ -155,6 +160,7 @@ data class PersongrunnlagMelding(
                     && kilde == other.kilde
                     && utbetalt == other.utbetalt
                     && landstilknytning == other.landstilknytning
+                    && omsorgsyterHarSelvstendigRett == other.omsorgsyterHarSelvstendigRett
         }
 
         override fun slåSammen(other: Omsorgsperiode): Omsorgsperiode {

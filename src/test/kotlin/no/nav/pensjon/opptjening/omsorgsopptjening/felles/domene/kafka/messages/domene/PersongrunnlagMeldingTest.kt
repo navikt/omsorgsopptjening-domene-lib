@@ -17,7 +17,6 @@ import no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.periode.Periode
 import no.nav.pensjon.opptjening.omsorgsopptjening.felles.domene.periode.Periode.Companion.november
 import no.nav.pensjon.opptjening.omsorgsopptjening.felles.serialize
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
@@ -41,6 +40,7 @@ class PersongrunnlagMeldingTest {
                             kilde = Kilde.BARNETRYGD,
                             utbetalt = 2000,
                             landstilknytning = Landstilknytning.NORGE,
+                            omsorgsyterHarSelvstendigRett = false,
                         ),
                     ),
                     hjelpestønadsperioder = listOf(
@@ -65,7 +65,7 @@ class PersongrunnlagMeldingTest {
         )
 
         val expected = """
-          {"omsorgsyter":"o","persongrunnlag":[{"omsorgsyter":"o","omsorgsperioder":[{"fom":"2022-01","tom":"2022-04","omsorgstype":"FULL_BARNETRYGD","omsorgsmottaker":"b","kilde":"BARNETRYGD","utbetalt":2000,"landstilknytning":"NORGE"}],"hjelpestønadsperioder":[{"fom":"2022-01","tom":"2022-04","omsorgstype":"HJELPESTØNAD_FORHØYET_SATS_4","omsorgsmottaker":"b","kilde":"INFOTRYGD"}]}],"feilinfo":[],"rådata":[{"a":"b"}],"innlesingId":"ecbfa0ee-da70-4abd-a8f3-b84319b36bf1","correlationId":"3b16c8bf-4682-442d-975e-8be450cf3877"}
+          {"omsorgsyter":"o","persongrunnlag":[{"omsorgsyter":"o","omsorgsperioder":[{"fom":"2022-01","tom":"2022-04","omsorgstype":"FULL_BARNETRYGD","omsorgsmottaker":"b","kilde":"BARNETRYGD","utbetalt":2000,"landstilknytning":"NORGE","omsorgsyterHarSelvstendigRett":false}],"hjelpestønadsperioder":[{"fom":"2022-01","tom":"2022-04","omsorgstype":"HJELPESTØNAD_FORHØYET_SATS_4","omsorgsmottaker":"b","kilde":"INFOTRYGD"}]}],"feilinfo":[],"rådata":[{"a":"b"}],"innlesingId":"ecbfa0ee-da70-4abd-a8f3-b84319b36bf1","correlationId":"3b16c8bf-4682-442d-975e-8be450cf3877"}
         """.trimIndent()
 
         val serialized = serialize(m)
@@ -133,6 +133,7 @@ class PersongrunnlagMeldingTest {
                             kilde = Kilde.BARNETRYGD,
                             utbetalt = 2000,
                             landstilknytning = Landstilknytning.NORGE,
+                            omsorgsyterHarSelvstendigRett = false,
                         ),
                     ),
                     hjelpestønadsperioder = listOf(
@@ -176,6 +177,7 @@ class PersongrunnlagMeldingTest {
                         kilde = Kilde.BARNETRYGD,
                         utbetalt = 2000,
                         landstilknytning = Landstilknytning.NORGE,
+                        omsorgsyterHarSelvstendigRett = false,
                     ),
                     PersongrunnlagMelding.Omsorgsperiode(
                         fom = januar(2022),
@@ -185,6 +187,7 @@ class PersongrunnlagMeldingTest {
                         kilde = Kilde.BARNETRYGD,
                         utbetalt = 2000,
                         landstilknytning = Landstilknytning.NORGE,
+                        omsorgsyterHarSelvstendigRett = false,
                     ),
                 ),
                 hjelpestønadsperioder = emptyList()
@@ -236,6 +239,7 @@ class PersongrunnlagMeldingTest {
                         kilde = Kilde.BARNETRYGD,
                         utbetalt = 2000,
                         landstilknytning = Landstilknytning.NORGE,
+                        omsorgsyterHarSelvstendigRett = false,
                     ),
                     PersongrunnlagMelding.Omsorgsperiode(
                         fom = januar(2022),
@@ -245,6 +249,7 @@ class PersongrunnlagMeldingTest {
                         kilde = Kilde.BARNETRYGD,
                         utbetalt = 2000,
                         landstilknytning = Landstilknytning.NORGE,
+                        omsorgsyterHarSelvstendigRett = false,
                     ),
                 ),
                 hjelpestønadsperioder = emptyList()
@@ -299,6 +304,7 @@ class PersongrunnlagMeldingTest {
                     kilde = Kilde.BARNETRYGD,
                     utbetalt = 2000,
                     landstilknytning = Landstilknytning.NORGE,
+                    omsorgsyterHarSelvstendigRett = false,
                 ),
                 PersongrunnlagMelding.Omsorgsperiode(
                     fom = mai(2022),
@@ -308,6 +314,7 @@ class PersongrunnlagMeldingTest {
                     kilde = Kilde.BARNETRYGD,
                     utbetalt = 1000,
                     landstilknytning = Landstilknytning.NORGE,
+                    omsorgsyterHarSelvstendigRett = false,
                 ),
                 PersongrunnlagMelding.Omsorgsperiode(
                     fom = juli(2022),
@@ -317,6 +324,7 @@ class PersongrunnlagMeldingTest {
                     kilde = Kilde.BARNETRYGD,
                     utbetalt = 2000,
                     landstilknytning = Landstilknytning.NORGE,
+                    omsorgsyterHarSelvstendigRett = false,
                 ),
                 PersongrunnlagMelding.Omsorgsperiode(
                     fom = mai(2022),
@@ -326,6 +334,7 @@ class PersongrunnlagMeldingTest {
                     kilde = Kilde.BARNETRYGD,
                     utbetalt = 1000,
                     landstilknytning = Landstilknytning.NORGE,
+                    omsorgsyterHarSelvstendigRett = false,
                 ),
                 PersongrunnlagMelding.Omsorgsperiode(
                     fom = januar(2022),
@@ -335,6 +344,7 @@ class PersongrunnlagMeldingTest {
                     kilde = Kilde.BARNETRYGD,
                     utbetalt = 1000,
                     landstilknytning = Landstilknytning.NORGE,
+                    omsorgsyterHarSelvstendigRett = false,
                 ),
             ),
             hjelpestønadsperioder = listOf(
@@ -388,6 +398,7 @@ class PersongrunnlagMeldingTest {
                         kilde = Kilde.BARNETRYGD,
                         utbetalt = 2000,
                         landstilknytning = Landstilknytning.NORGE,
+                        omsorgsyterHarSelvstendigRett = false,
                     ),
                     PersongrunnlagMelding.Omsorgsperiode(
                         fom = mai(2022),
@@ -397,6 +408,7 @@ class PersongrunnlagMeldingTest {
                         kilde = Kilde.BARNETRYGD,
                         utbetalt = 1000,
                         landstilknytning = Landstilknytning.NORGE,
+                        omsorgsyterHarSelvstendigRett = false,
                     ),
                     PersongrunnlagMelding.Omsorgsperiode(
                         fom = juli(2022),
@@ -406,6 +418,7 @@ class PersongrunnlagMeldingTest {
                         kilde = Kilde.BARNETRYGD,
                         utbetalt = 2000,
                         landstilknytning = Landstilknytning.NORGE,
+                        omsorgsyterHarSelvstendigRett = false,
                     ),
                     PersongrunnlagMelding.Omsorgsperiode(
                         fom = januar(2022),
@@ -415,6 +428,7 @@ class PersongrunnlagMeldingTest {
                         kilde = Kilde.BARNETRYGD,
                         utbetalt = 1000,
                         landstilknytning = Landstilknytning.NORGE,
+                        omsorgsyterHarSelvstendigRett = false,
                     ),
                 ),
                 hjelpestønadsperioder = listOf(
