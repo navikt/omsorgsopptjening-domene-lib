@@ -61,11 +61,12 @@ class PersongrunnlagMeldingTest {
                 )
             ),
             innlesingId = InnlesingId.fromString("ecbfa0ee-da70-4abd-a8f3-b84319b36bf1"),
-            correlationId = CorrelationId.fromString("3b16c8bf-4682-442d-975e-8be450cf3877")
+            correlationId = CorrelationId.fromString("3b16c8bf-4682-442d-975e-8be450cf3877"),
+            opptjeningsAr = 2022,
         )
 
         val expected = """
-          {"omsorgsyter":"o","persongrunnlag":[{"omsorgsyter":"o","omsorgsperioder":[{"fom":"2022-01","tom":"2022-04","omsorgstype":"FULL_BARNETRYGD","omsorgsmottaker":"b","kilde":"BARNETRYGD","utbetalt":2000,"landstilknytning":"NORGE","omsorgsyterHarSelvstendigRett":false}],"hjelpestønadsperioder":[{"fom":"2022-01","tom":"2022-04","omsorgstype":"HJELPESTØNAD_FORHØYET_SATS_4","omsorgsmottaker":"b","kilde":"INFOTRYGD"}]}],"feilinfo":[],"rådata":[{"a":"b"}],"innlesingId":"ecbfa0ee-da70-4abd-a8f3-b84319b36bf1","correlationId":"3b16c8bf-4682-442d-975e-8be450cf3877"}
+          {"omsorgsyter":"o","persongrunnlag":[{"omsorgsyter":"o","omsorgsperioder":[{"fom":"2022-01","tom":"2022-04","omsorgstype":"FULL_BARNETRYGD","omsorgsmottaker":"b","kilde":"BARNETRYGD","utbetalt":2000,"landstilknytning":"NORGE","omsorgsyterHarSelvstendigRett":false}],"hjelpestønadsperioder":[{"fom":"2022-01","tom":"2022-04","omsorgstype":"HJELPESTØNAD_FORHØYET_SATS_4","omsorgsmottaker":"b","kilde":"INFOTRYGD"}]}],"feilinfo":[],"rådata":[{"a":"b"}],"innlesingId":"ecbfa0ee-da70-4abd-a8f3-b84319b36bf1","correlationId":"3b16c8bf-4682-442d-975e-8be450cf3877","opptjeningsAr": 2022}
         """.trimIndent()
 
         val serialized = serialize(m)
@@ -96,11 +97,12 @@ class PersongrunnlagMeldingTest {
                 )
             ),
             innlesingId = InnlesingId.fromString("ecbfa0ee-da70-4abd-a8f3-b84319b36bf1"),
-            correlationId = CorrelationId.fromString("3b16c8bf-4682-442d-975e-8be450cf3877")
+            correlationId = CorrelationId.fromString("3b16c8bf-4682-442d-975e-8be450cf3877"),
+            opptjeningsAr = 2022,
         )
 
         val expected = """
-          {"omsorgsyter":"o","persongrunnlag":[],"feilinfo": [{"type":"OverlappendeBarnetrygdperioder","message":"bt","exceptionType":"et","exceptionMessage":"em","omsorgsmottaker": "om"}],"rådata":[{"a":"b"}],"innlesingId":"ecbfa0ee-da70-4abd-a8f3-b84319b36bf1","correlationId":"3b16c8bf-4682-442d-975e-8be450cf3877"}
+          {"omsorgsyter":"o","persongrunnlag":[],"feilinfo": [{"type":"OverlappendeBarnetrygdperioder","message":"bt","exceptionType":"et","exceptionMessage":"em","omsorgsmottaker": "om"}],"rådata":[{"a":"b"}],"innlesingId":"ecbfa0ee-da70-4abd-a8f3-b84319b36bf1","correlationId":"3b16c8bf-4682-442d-975e-8be450cf3877","opptjeningsAr": 2022}
         """.trimIndent()
 
         val serialized = serialize(m)
@@ -116,7 +118,7 @@ class PersongrunnlagMeldingTest {
     @Test
     fun `deserialisering er bakoverkompatibel for manglende feilinformasjon`() {
         val serialized = """
-          {"omsorgsyter":"o","persongrunnlag":[{"omsorgsyter":"o","omsorgsperioder":[{"fom":"2022-01","tom":"2022-04","omsorgstype":"FULL_BARNETRYGD","omsorgsmottaker":"b","kilde":"BARNETRYGD","utbetalt":2000,"landstilknytning":"NORGE"}],"hjelpestønadsperioder":[{"fom":"2022-01","tom":"2022-04","omsorgstype":"HJELPESTØNAD_FORHØYET_SATS_4","omsorgsmottaker":"b","kilde":"INFOTRYGD"}]}],"rådata":[{"a":"b"}],"innlesingId":"ecbfa0ee-da70-4abd-a8f3-b84319b36bf1","correlationId":"3b16c8bf-4682-442d-975e-8be450cf3877"}
+          {"omsorgsyter":"o","persongrunnlag":[{"omsorgsyter":"o","omsorgsperioder":[{"fom":"2022-01","tom":"2022-04","omsorgstype":"FULL_BARNETRYGD","omsorgsmottaker":"b","kilde":"BARNETRYGD","utbetalt":2000,"landstilknytning":"NORGE"}],"hjelpestønadsperioder":[{"fom":"2022-01","tom":"2022-04","omsorgstype":"HJELPESTØNAD_FORHØYET_SATS_4","omsorgsmottaker":"b","kilde":"INFOTRYGD"}]}],"rådata":[{"a":"b"}],"innlesingId":"ecbfa0ee-da70-4abd-a8f3-b84319b36bf1","correlationId":"3b16c8bf-4682-442d-975e-8be450cf3877","opptjeningsAr": 2022}
         """.trimIndent()
 
         val expected = PersongrunnlagMelding(
@@ -154,7 +156,8 @@ class PersongrunnlagMeldingTest {
                 )
             ),
             innlesingId = InnlesingId.fromString("ecbfa0ee-da70-4abd-a8f3-b84319b36bf1"),
-            correlationId = CorrelationId.fromString("3b16c8bf-4682-442d-975e-8be450cf3877")
+            correlationId = CorrelationId.fromString("3b16c8bf-4682-442d-975e-8be450cf3877"),
+            opptjeningsAr = 2022,
         )
 
         val deserialized = deserialize<PersongrunnlagMelding>(serialized)
