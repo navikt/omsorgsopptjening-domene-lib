@@ -15,6 +15,7 @@ data class PersongrunnlagMelding(
     val rådata: Rådata,
     val innlesingId: InnlesingId,
     val correlationId: CorrelationId,
+    val opptjeningsAr: Int
 ) {
     init {
         require((persongrunnlag.isEmpty().xor(feilinfo.isEmpty()))) {
