@@ -2,7 +2,7 @@ import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-val jacksonVersion = "2.22.2"
+val jacksonVersion = "2.23.0"
 
 val assertJVersion = "3.27.7"
 val jsonAssertVersion = "1.5.3"
@@ -14,7 +14,7 @@ plugins {
     id("java-library")
     id("maven-publish")
     id("net.researchgate.release") version "3.1.0"
-    id("com.github.ben-manes.versions") version "0.61.0"
+    id("com.github.ben-manes.versions") version "0.67.0"
 }
 
 group = "no.nav.pensjon.opptjening"
